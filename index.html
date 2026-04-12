@@ -95,6 +95,7 @@
   .n-yes{background:var(--green-bg);color:var(--green-text);border:1px solid #A0E0BC}
   .n-scope{background:var(--amber-bg);color:var(--amber-text);border:1px solid #F0D878}
   .n-no{background:var(--red-bg);color:var(--red-text);border:1px solid #F0B8B0}
+  .n-section{background:#E8F8F5;color:#0E6655;border:1px solid #A0DDD0}
   .del-btn{font-size:13px;color:var(--text3);background:none;border:none;cursor:pointer;padding:0 2px;line-height:1;opacity:0;transition:opacity 0.15s;flex-shrink:0;margin-top:2px;font-family:inherit}
   .checklist li:hover .del-btn{opacity:1}
   .del-btn:hover{color:var(--red)}
@@ -231,7 +232,7 @@ const SECTIONS = [
   {id:'overview',icon:'#i-globe',title:'Platform overview',subtitle:'The full system, end to end',tier:'all',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',
    items:[{t:'Discovery — why Oritain exists and why integrity matters'},{t:'Onboarding — ORCA programme design before any test is run'},{t:'Bronze tier — enough insight to build confidence'},{t:'Gold tier — decision-making, intelligence, and scale'},{t:'My Network — trust, origins, network effects'},{t:"Insights & Intelligence — explain what's happening and why"},{t:'Reports — decisions, not downloads'},{t:'Upsell logic — business model made visible'}]},
   {id:'discovery',icon:'#i-search',title:'Discovery & onboarding',subtitle:'Exists — intentionally abstracted',tier:'all',color:'#2980B9',iconBg:'#E8F4FD',pc:'#3498DB',
-   items:[{t:'Awareness & discovery story'},{t:'Interviews & workshops — supply chain data capture'},{t:'ORCA as a black box — programme design output'},{t:'Test allocation by tier — feeds dashboard on day one'},{t:'Internal sampling app acknowledged but not shown',tag:'scope'}]},
+   items:[{t:'Awareness & discovery story'},{t:'Interviews & workshops — supply chain data capture'},{t:'ORCA as a black box — programme design output'},{t:'Test allocation by tier — feeds dashboard on day one'},{t:'Internal sampling app acknowledged but not shown'}]},
   {id:'bronze',icon:'#i-medal',title:'Bronze tier',subtitle:'Restraint by design',tier:'bronze',color:'#B87333',iconBg:'#FEF2E6',pc:'#D4956A',
    items:[{t:'Dashboard — basic KPIs, test counts, simple status'},{t:'Tests — book a test, view list, basic tracking'},{t:'Insights — 1–2 surface insights only'},{t:'Reports — individual results only, no aggregation'},{t:'My Network — vendor names only, no depth'},{t:'Upsell cues on every limited feature'}]},
   {id:'gold',icon:'#i-star',title:'Gold tier',subtitle:'The core platform',tier:'gold',color:'#9A7B0A',iconBg:'#FEFAE6',pc:'#C9A31A',
@@ -243,7 +244,7 @@ const SECTIONS = [
   {id:'insights',icon:'#i-bulb',title:'Insights & intelligence',subtitle:'Three layers — meaning, exploration, storytelling',tier:'gold',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',
    items:[{t:'3–5 key insights surfaced per session — not everything'},{t:'Performance vs benchmark — industry & Oritain standard'},{t:'Why-it-happened explanation — not just what'},{t:'Smart recommendations — actionable next steps'},{t:'Filters: region, country, sample type'},{t:'Prohibited trade analysis'},{t:'Claimed origin vs verified — the gap made visible'},{t:'Risk prevalence by region & product stage'},{t:'Save & rename filter templates'},{t:'QBR — seasonal context + forward-looking guidance'},{t:'QBR — contextual reassurance (numbers in context)'}]},
   {id:'network',icon:'#i-network',title:'My network',subtitle:'Trust architecture, not CRM',tier:'gold',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',
-   items:[{t:'Network dashboard — suppliers, vendors, tier distribution'},{t:'Connection levels — 1st, 2nd, 3rd degree visibility'},{t:'Community snapshot — anonymised network view'},{t:'Butterfly map — upstream (source) & downstream (buyers)'},{t:'Commodity origin visibility — verified not claimed'},{t:'Vendor directory — status, actions, profiles'},{t:'Vendor profile — location, how they joined, commodities'},{t:'Mandate requests — brand pushes supplier to connect'},{t:'Data access requests & privacy toggles'},{t:'Continuous vs on-demand sharing toggle'},{t:'Light in-platform messaging',tag:'scope'}]},
+   items:[{t:'Network dashboard — suppliers, vendors, tier distribution'},{t:'Connection levels — 1st, 2nd, 3rd degree visibility'},{t:'Community snapshot — anonymised network view'},{t:'Butterfly map — upstream (source) & downstream (buyers)'},{t:'Commodity origin visibility — verified not claimed'},{t:'Vendor directory — status, actions, profiles'},{t:'Vendor profile — location, how they joined, commodities'},{t:'Mandate requests — brand pushes supplier to connect'},{t:'Data access requests & privacy toggles'},{t:'Continuous vs on-demand sharing toggle'},{t:'Light in-platform messaging'}]},
   {id:'upsell',icon:'#i-arrow',title:'Upsell & tiers',subtitle:'The gap between Bronze and Gold',tier:'both',color:'#2C3E50',iconBg:'#F0F3F6',pc:'#4A6FA5',
    items:[{t:'Dashboard: basic KPIs → trends, benchmarks, forecasting'},{t:'Insights: surface number → deep narrative + why'},{t:'Reports: one test → full vendor & risk roll-up'},{t:'Network: names list → full living ecosystem'},{t:'Intelligence: not available → filters, saved views, risk'},{t:'Test assignment: self only → full network assignment'},{t:'Alerts: not available → risk-jump triggers'}]},
   {id:'decisions',icon:'#i-log',title:'Decision log',subtitle:'In, out & the honest reason',tier:'all',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',
@@ -253,7 +254,7 @@ const SECTIONS = [
   {id:'todos',icon:'#i-check',title:'Global to-dos',subtitle:'Platform-wide polish — add your own below',tier:'all',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
    items:[{t:'Replace Cotton & Timber icons with SVGs'},{t:'Global consistency check — spacing, type, tone'},{t:'Test count sync across all tabs'},{t:'Upsell cue consistency — tone and placement'},{t:'Filter template save/load — end-to-end'},{t:'Mobile responsiveness check'},{t:'Empty state designs for all sections'},{t:'Accessibility pass — contrast & ARIA labels'},{t:'Add a subnav to Tests — Tests in Pipeline and All Tests'},{t:'Play with the Test counter on the top nav'},{t:'Test all Breadcrumbs'},{t:'Create Profile page — Personal info + History (bank statement inspired) + Your supply chain (ORCA design) + Tests & Subscription (test count, expiry, renewal) + Payment Method + Sharing Info'},{t:'Add To Do / Notifications in dashboard — card with to-dos, opens in side panel with actions, CTA takes to relevant place'},{t:'Add info in onboarding — questionnaire for admin side (TBD: tooltip or alert banner)'},{t:'Verify Gold unlocked cards — premium badge + tooltip'},{t:'Tier Progress Animation'},{t:'Clean up the Tests Breakdown — details of what goes under each tab'},{t:'Clean up Handshake'}]},
   {id:'scoped',icon:'#i-future',title:'Scoped for future',subtitle:'Not now — but definitely on the radar. Add your own below.',tier:'all',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',futureBucket:true,
-   items:[{t:'Supplier-side full platform experience — brand POV first, supplier POV next'},{t:'Get a Tour — in-platform product walkthrough for new users'},{t:'Loading & skeleton states — especially for Intelligence and network map'},{t:'Full AI recommendation engine — deeper logic as data volume grows'},{t:'Real-time data infrastructure — live pipelines once product vision is validated'},{t:'Payment & billing module — invoicing and contract management'},{t:'Enforcement & legal action logic — escalation path for failed tests'},{t:'Full messaging platform — if light messaging proves insufficient'},{t:'Mobile app — field-facing or client-facing native experience'},{t:'Supplier portal — dedicated experience built from the supplier point of view'}]},
+   items:[{t:'Internal sampling app — acknowledged but not shown',tag:'Discovery'},{t:'Light in-platform messaging — coordinate without replacing email',tag:'My Network'},{t:'Get a Tour — in-platform product walkthrough for new users',tag:'To-Dos'},{t:'Loading & skeleton states — especially for Intelligence and network map',tag:'To-Dos'},{t:'Supplier-side full platform experience — brand POV first, supplier POV next'},{t:'Full AI recommendation engine — deeper logic as data volume grows'},{t:'Real-time data infrastructure — live pipelines once product vision is validated'},{t:'Payment & billing module — invoicing and contract management'},{t:'Enforcement & legal action logic — escalation path for failed tests'},{t:'Full messaging platform — if light messaging proves insufficient'},{t:'Mobile app — field-facing or client-facing native experience'},{t:'Supplier portal — dedicated experience built from the supplier point of view'}]},
 ];
 
 let checks  = {};
@@ -348,9 +349,12 @@ function scheduleSave(){
 
 // ── render ────────────────────────────────────────────────────────────────────
 function tagHTML(tag){
+  if(!tag) return '';
   const map = {yes:['n-yes','In'],no:['n-no','Out'],scope:['n-scope','Scoped']};
-  const m = map[tag]; if(!m) return '';
-  return `<span class="note-tag ${m[0]}">${m[1]}</span>`;
+  const m = map[tag];
+  if(m) return `<span class="note-tag ${m[0]}">${m[1]}</span>`;
+  // section label — amber style with the section name
+  return `<span class="note-tag n-section">${tag}</span>`;
 }
 function tierBadge(tier){
   const map = {bronze:['b-bronze','Bronze'],gold:['b-gold','Gold'],both:['b-both','Both tiers']};
