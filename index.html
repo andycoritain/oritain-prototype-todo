@@ -211,6 +211,7 @@
   <symbol id="i-log" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></symbol>
   <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z"/></symbol>
+  <symbol id="i-future" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L11 13V7h1.5v5.25l4.5 2.67-1.5 2.08z"/></symbol>
 </defs></svg>
 
 <script>
@@ -223,6 +224,7 @@ const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 
 const SK = 'oritain_checks_v4';
 const TK = 'oritain_todos_v4';
+const FK = 'oritain_future_v4';
 const isConfigured = SUPABASE_URL.startsWith('https://') && SUPABASE_KEY.startsWith('eyJ');
 
 const SECTIONS = [
@@ -249,11 +251,14 @@ const SECTIONS = [
   {id:'done',icon:'#i-trophy',title:'What you have done',subtitle:'Your personal credibility weapon',tier:'all',color:'#1E5631',iconBg:'#E9F7EF',pc:'#27AE60',
    items:[{t:'Research — interviews & workshops',tag:'yes'},{t:'Synthesis — themes, HMWs, design decisions',tag:'yes'},{t:'Wireframes & flows — 10+ platform sections',tag:'yes'},{t:'Design system — built inside Lovable',tag:'yes'},{t:'Platform foundations — cohesive, reusable',tag:'yes'},{t:'GitHub integration — version control set up',tag:'yes'},{t:'Accessibility — considered from the start',tag:'yes'},{t:'Product thinking — tiers, upsell, business logic',tag:'yes'},{t:'Systems thinking — one platform, many roles',tag:'yes'}]},
   {id:'todos',icon:'#i-check',title:'Global to-dos',subtitle:'Platform-wide polish — add your own below',tier:'all',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
-   items:[{t:'Replace Cotton & Timber icons with SVGs'},{t:'Global consistency check — spacing, type, tone'},{t:'Test count sync across all tabs'},{t:'Upsell cue consistency — tone and placement'},{t:'Filter template save/load — end-to-end'},{t:'Mobile responsiveness check'},{t:'Empty state designs for all sections'},{t:'Accessibility pass — contrast & ARIA labels'},{t:'Get a Tour — product walkthrough',tag:'scope'},{t:'Loading & skeleton states',tag:'scope'}]},
+   items:[{t:'Replace Cotton & Timber icons with SVGs'},{t:'Global consistency check — spacing, type, tone'},{t:'Test count sync across all tabs'},{t:'Upsell cue consistency — tone and placement'},{t:'Filter template save/load — end-to-end'},{t:'Mobile responsiveness check'},{t:'Empty state designs for all sections'},{t:'Accessibility pass — contrast & ARIA labels'},{t:'Add a subnav to Tests — Tests in Pipeline and All Tests'},{t:'Play with the Test counter on the top nav'},{t:'Test all Breadcrumbs'},{t:'Create Profile page — Personal info + History (bank statement inspired) + Your supply chain (ORCA design) + Tests & Subscription (test count, expiry, renewal) + Payment Method + Sharing Info'},{t:'Add To Do / Notifications in dashboard — card with to-dos, opens in side panel with actions, CTA takes to relevant place'},{t:'Add info in onboarding — questionnaire for admin side (TBD: tooltip or alert banner)'},{t:'Verify Gold unlocked cards — premium badge + tooltip'},{t:'Tier Progress Animation'},{t:'Clean up the Tests Breakdown — details of what goes under each tab'},{t:'Clean up Handshake'}]},
+  {id:'scoped',icon:'#i-future',title:'Scoped for future',subtitle:'Not now — but definitely on the radar. Add your own below.',tier:'all',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',futureBucket:true,
+   items:[{t:'Supplier-side full platform experience — brand POV first, supplier POV next'},{t:'Get a Tour — in-platform product walkthrough for new users'},{t:'Loading & skeleton states — especially for Intelligence and network map'},{t:'Full AI recommendation engine — deeper logic as data volume grows'},{t:'Real-time data infrastructure — live pipelines once product vision is validated'},{t:'Payment & billing module — invoicing and contract management'},{t:'Enforcement & legal action logic — escalation path for failed tests'},{t:'Full messaging platform — if light messaging proves insufficient'},{t:'Mobile app — field-facing or client-facing native experience'},{t:'Supplier portal — dedicated experience built from the supplier point of view'}]},
 ];
 
 let checks  = {};
 let customs = [];
+let futures = [];
 let saveTimer = null;
 
 // ── Supabase helpers ──────────────────────────────────────────────────────────
@@ -300,9 +305,10 @@ async function load(){
   }
   setSync('syncing','Loading your progress...');
   try {
-    const [c, t] = await Promise.all([sbGet(SK), sbGet(TK)]);
+    const [c, t, fu] = await Promise.all([sbGet(SK), sbGet(TK), sbGet(FK)]);
     if(c) checks  = c;
     if(t) customs = t;
+    if(fu) futures = fu;
     setSync('synced','Synced — same progress on all your devices', now());
     document.getElementById('footerNote').textContent = 'Last synced ' + now();
   } catch(e){
@@ -315,16 +321,18 @@ async function load(){
 function loadLocal(){
   try{ checks  = JSON.parse(localStorage.getItem(SK)||'{}'); }catch(e){}
   try{ customs = JSON.parse(localStorage.getItem(TK)||'[]'); }catch(e){}
+  try{ futures = JSON.parse(localStorage.getItem(FK)||'[]'); }catch(e){}
 }
 
 // ── save ──────────────────────────────────────────────────────────────────────
 async function save(){
   localStorage.setItem(SK, JSON.stringify(checks));
   localStorage.setItem(TK, JSON.stringify(customs));
+  localStorage.setItem(FK, JSON.stringify(futures));
   if(!isConfigured) return;
   setSync('syncing','Saving...');
   try {
-    await Promise.all([sbSet(SK, checks), sbSet(TK, customs)]);
+    await Promise.all([sbSet(SK, checks), sbSet(TK, customs), sbSet(FK, futures)]);
     const t = now();
     setSync('synced','Saved — synced across all your devices', 'Saved ' + t);
     document.getElementById('footerNote').textContent = 'Last synced ' + t;
@@ -358,9 +366,13 @@ function tick(done){
 }
 
 function getItems(sec){
-  const base = sec.items.map((item,i)=>({text:item.t, done:!!(checks[sec.id]||{})[i], tag:item.tag||null, isCustom:false, idx:i}));
+  const base = sec.items.map((item,i)=>({text:item.t, done:!!(checks[sec.id]||{})[i], tag:item.tag||null, isCustom:false, isFuture:false, idx:i}));
+  if(sec.futureBucket){
+    const extra = futures.map((c,ci)=>({text:c.t, done:!!c.done, tag:null, isCustom:false, isFuture:true, futureIdx:ci}));
+    return [...base,...extra];
+  }
   if(sec.editable){
-    const extra = customs.map((c,ci)=>({text:c.t, done:!!c.done, tag:null, isCustom:true, customIdx:ci}));
+    const extra = customs.map((c,ci)=>({text:c.t, done:!!c.done, tag:null, isCustom:true, isFuture:false, customIdx:ci}));
     return [...base,...extra];
   }
   return base;
@@ -373,6 +385,13 @@ function progressFor(sec){
 }
 
 function liHTML(secId, item){
+  if(item.isFuture){
+    return `<li onclick="toggleFuture(${item.futureIdx})">
+      ${tick(item.done)}
+      <span class="check-label${item.done?' done':''}">${item.text}</span>
+      <button class="del-btn" onclick="event.stopPropagation();deleteFuture(${item.futureIdx})" title="Remove">✕</button>
+    </li>`;
+  }
   if(item.isCustom){
     return `<li onclick="toggleCustom(${item.customIdx})">
       ${tick(item.done)}
@@ -394,9 +413,9 @@ function renderAll(){
     const {done,total,pct} = progressFor(sec);
     const items = getItems(sec);
     const listHTML = items.map(i=>liHTML(sec.id,i)).join('');
-    const addRow = sec.editable ? `<div class="add-row">
-      <input class="add-input" id="inp-${sec.id}" type="text" placeholder="Add a new to-do and press Enter..." onkeydown="if(event.key==='Enter')addCustom()">
-      <button class="add-btn" onclick="addCustom()">+ Add</button>
+    const addRow = (sec.editable || sec.futureBucket) ? `<div class="add-row">
+      <input class="add-input" id="inp-${sec.id}" type="text" placeholder="${sec.futureBucket ? 'Add something for the future...' : 'Add a new to-do and press Enter...'}" onkeydown="if(event.key==='Enter')${sec.futureBucket ? 'addFuture()' : 'addCustom()'}">
+      <button class="add-btn" onclick="${sec.futureBucket ? 'addFuture()' : 'addCustom()'}">+ Add</button>
     </div>` : '';
 
     const card = document.createElement('div');
@@ -470,6 +489,30 @@ function addCustom(){
   scheduleSave();
 }
 
+function toggleFuture(ci){
+  futures[ci].done = !futures[ci].done;
+  refreshCard('scoped');
+  scheduleSave();
+}
+
+function deleteFuture(ci){
+  futures.splice(ci,1);
+  refreshCard('scoped');
+  scheduleSave();
+}
+
+function addFuture(){
+  const inp = document.getElementById('inp-scoped');
+  const text = inp.value.trim();
+  if(!text) return;
+  futures.push({t:text, done:false});
+  inp.value = '';
+  const body = document.getElementById('body-scoped');
+  if(!body.classList.contains('open')){ body.classList.add('open'); document.getElementById('chev-scoped').classList.add('open'); }
+  refreshCard('scoped');
+  scheduleSave();
+}
+
 function updateSummary(){
   let ti=0,td=0,sd=0;
   SECTIONS.forEach(sec=>{
@@ -502,7 +545,7 @@ function expandAll(){ SECTIONS.forEach(s=>{ document.getElementById('body-'+s.id
 function collapseAll(){ SECTIONS.forEach(s=>{ document.getElementById('body-'+s.id).classList.remove('open'); document.getElementById('chev-'+s.id).classList.remove('open'); }); }
 function resetAll(){
   if(!confirm('Reset all progress? This cannot be undone.')) return;
-  checks={}; customs=[];
+  checks={}; customs=[]; futures=[];
   save(); renderAll();
 }
 
