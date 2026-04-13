@@ -116,6 +116,36 @@
   .footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   .footer-text{font-size:12px;color:var(--text3)}
   @media(max-width:700px){.roadmap-cols{grid-template-columns:1fr}.sections-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:repeat(2,1fr)}}
+  .feedback-section{margin-top:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  .feedback-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
+  .feedback-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+  .feedback-card-sub{font-size:12px;color:var(--text3);margin-bottom:16px}
+  .fb-name{width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;outline:none;font-family:inherit;margin-bottom:8px;transition:border-color 0.15s}
+  .fb-name:focus{border-color:var(--border2)}
+  .fb-textarea{width:100%;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;outline:none;font-family:inherit;resize:vertical;min-height:100px;line-height:1.5;transition:border-color 0.15s}
+  .fb-textarea:focus{border-color:var(--border2)}
+  .fb-section-sel{width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;outline:none;font-family:inherit;margin-bottom:8px;cursor:pointer}
+  .fb-name-btn{padding:6px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text2);transition:all 0.15s;font-family:inherit}
+  .fb-name-btn:hover{border-color:var(--border2);color:var(--text)}
+  .fb-name-btn.selected{background:var(--text);color:var(--bg);border-color:var(--text)}
+  .fb-submit{margin-top:10px;width:100%;padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.15s}
+  .fb-submit:hover{background:var(--bg2)}
+  .fb-submit.sent{border-color:#27AE60;color:#27AE60}
+  .fb-rows{list-style:none;padding:0;max-height:420px;overflow-y:auto}
+  .fb-row{padding:12px 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:4px}
+  .fb-row:last-child{border-bottom:none}
+  .fb-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .fb-row-name{font-size:13px;font-weight:600;color:var(--text)}
+  .fb-row-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .fb-row-section{font-size:11px;font-weight:500;padding:2px 8px;border-radius:var(--radius-pill);background:var(--blue-bg);color:var(--blue-text);border:1px solid #B5D0F0}
+  .fb-row-time{font-size:11px;color:var(--text3);white-space:nowrap}
+  .fb-row-text{font-size:13px;color:var(--text2);line-height:1.5}
+  .fb-row-del{font-size:12px;color:var(--text3);background:none;border:none;cursor:pointer;padding:0;opacity:0;transition:opacity 0.15s;font-family:inherit}
+  .fb-row:hover .fb-row-del{opacity:1}
+  .fb-row-del:hover{color:var(--red)}
+  .fb-empty{font-size:13px;color:var(--text3);padding:24px 0;text-align:center}
+  .fb-count{font-size:12px;color:var(--text3);margin-top:4px}
+  @media(max-width:700px){.feedback-section{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -193,6 +223,48 @@
     </div>
   </div>
 
+  <div class="feedback-section">
+    <div class="feedback-card">
+      <div class="feedback-card-title">Leave feedback</div>
+      <div class="feedback-card-sub">Reviewing the prototype? Drop your thoughts here — it goes straight to the live feed.</div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:8px;font-weight:500">Who are you?</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px" id="fb-name-picker">
+          <button class="fb-name-btn" onclick="selectName(this,'Aiden')">Aiden</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Harry')">Harry</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Phil')">Phil</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Anouk')">Anouk</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Charlotte')">Charlotte</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Olya')">Olya</button>
+          <button class="fb-name-btn" onclick="selectName(this,'Anonymous')">Anonymous</button>
+        </div>
+      </div>
+      <input type="hidden" id="fb-name" value="">
+      <select class="fb-section-sel" id="fb-section">
+        <option value="">Which section is this about?</option>
+        <option>Platform overview</option>
+        <option>Discovery & onboarding</option>
+        <option>Bronze tier</option>
+        <option>Gold tier</option>
+        <option>Tests & book test</option>
+        <option>Reports</option>
+        <option>Insights & intelligence</option>
+        <option>My network</option>
+        <option>Upsell & tiers</option>
+        <option>Decision log</option>
+        <option>General / overall</option>
+        <option>Other</option>
+      </select>
+      <textarea class="fb-textarea" id="fb-text" placeholder="What did you think? What's working, what's not, what's missing..."></textarea>
+      <button class="fb-submit" id="fb-btn" onclick="submitFeedback()">Send feedback</button>
+    </div>
+    <div class="feedback-card">
+      <div class="feedback-card-title">Team feedback</div>
+      <div class="feedback-card-sub" id="fb-count-label">All feedback from your reviewers — live and synced.</div>
+      <ul class="fb-rows" id="fb-rows"><li class="fb-empty">No feedback yet — share the link with your team.</li></ul>
+    </div>
+  </div>
+
   <div class="footer">
     <span class="footer-text">Oritain Platform — Living Document</span>
     <span class="footer-text" id="footerNote"></span>
@@ -226,6 +298,7 @@ const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const SK = 'oritain_checks_v4';
 const TK = 'oritain_todos_v4';
 const FK = 'oritain_future_v4';
+const FBKEY = 'oritain_feedback_v1';
 const isConfigured = SUPABASE_URL.startsWith('https://') && SUPABASE_KEY.startsWith('eyJ');
 
 const SECTIONS = [
@@ -260,6 +333,7 @@ const SECTIONS = [
 let checks  = {};
 let customs = [];
 let futures = [];
+let feedbacks = [];
 let saveTimer = null;
 
 // ── Supabase helpers ──────────────────────────────────────────────────────────
@@ -306,10 +380,11 @@ async function load(){
   }
   setSync('syncing','Loading your progress...');
   try {
-    const [c, t, fu] = await Promise.all([sbGet(SK), sbGet(TK), sbGet(FK)]);
+    const [c, t, fu, fb] = await Promise.all([sbGet(SK), sbGet(TK), sbGet(FK), sbGet(FBKEY).catch(()=>null)]);
     if(c) checks  = c;
     if(t) customs = t;
     if(fu) futures = fu;
+    if(fb) feedbacks = fb;
     setSync('synced','Synced — same progress on all your devices', now());
     document.getElementById('footerNote').textContent = 'Last synced ' + now();
   } catch(e){
@@ -317,12 +392,14 @@ async function load(){
     loadLocal();
   }
   renderAll();
+  renderFeedback();
 }
 
 function loadLocal(){
   try{ checks  = JSON.parse(localStorage.getItem(SK)||'{}'); }catch(e){}
   try{ customs = JSON.parse(localStorage.getItem(TK)||'[]'); }catch(e){}
   try{ futures = JSON.parse(localStorage.getItem(FK)||'[]'); }catch(e){}
+  try{ feedbacks = JSON.parse(localStorage.getItem(FBKEY)||'[]'); }catch(e){}
 }
 
 // ── save ──────────────────────────────────────────────────────────────────────
@@ -330,10 +407,11 @@ async function save(){
   localStorage.setItem(SK, JSON.stringify(checks));
   localStorage.setItem(TK, JSON.stringify(customs));
   localStorage.setItem(FK, JSON.stringify(futures));
+  localStorage.setItem(FBKEY, JSON.stringify(feedbacks));
   if(!isConfigured) return;
   setSync('syncing','Saving...');
   try {
-    await Promise.all([sbSet(SK, checks), sbSet(TK, customs), sbSet(FK, futures)]);
+    await Promise.all([sbSet(SK, checks), sbSet(TK, customs), sbSet(FK, futures), sbSet(FBKEY, feedbacks)]);
     const t = now();
     setSync('synced','Saved — synced across all your devices', 'Saved ' + t);
     document.getElementById('footerNote').textContent = 'Last synced ' + t;
@@ -551,6 +629,73 @@ function resetAll(){
   if(!confirm('Reset all progress? This cannot be undone.')) return;
   checks={}; customs=[]; futures=[];
   save(); renderAll();
+}
+
+function renderFeedback(){
+  const list = document.getElementById('fb-rows');
+  const label = document.getElementById('fb-count-label');
+  if(!feedbacks.length){
+    list.innerHTML = '<li class="fb-empty">No feedback yet — share the link with your team.</li>';
+    label.textContent = 'All feedback from your reviewers — live and synced.';
+    return;
+  }
+  label.textContent = feedbacks.length + ' response' + (feedbacks.length===1?'':'s') + ' — live and synced.';
+  list.innerHTML = [...feedbacks].reverse().map((fb,ri)=>{
+    const realIdx = feedbacks.length - 1 - ri;
+    const sectionBadge = fb.section ? `<span class="fb-row-section">${fb.section}</span>` : '';
+    return `<li class="fb-row">
+      <div class="fb-row-top">
+        <span class="fb-row-name">${fb.name||'Anonymous'}</span>
+        <div class="fb-row-meta">
+          ${sectionBadge}
+          <span class="fb-row-time">${fb.time||''}</span>
+          <button class="fb-row-del" onclick="deleteFeedback(${realIdx})" title="Remove">✕</button>
+        </div>
+      </div>
+      <div class="fb-row-text">${fb.text}</div>
+    </li>`;
+  }).join('');
+}
+
+function selectName(btn, name){
+  document.querySelectorAll('.fb-name-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('fb-name').value = name;
+}
+
+async function submitFeedback(){
+  const name = document.getElementById('fb-name').value.trim();
+  const text = document.getElementById('fb-text').value.trim();
+  const section = document.getElementById('fb-section').value;
+  if(!text) return;
+  const btn = document.getElementById('fb-btn');
+  feedbacks.push({
+    name: name||'Anonymous',
+    text,
+    section,
+    time: new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+  });
+  document.getElementById('fb-name').value='';
+  document.querySelectorAll('.fb-name-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('fb-text').value='';
+  document.getElementById('fb-section').value='';
+  btn.textContent='Sent!'; btn.classList.add('sent');
+  setTimeout(()=>{ btn.textContent='Send feedback'; btn.classList.remove('sent'); }, 2500);
+  renderFeedback();
+  await saveFeedbackOnly();
+}
+
+async function saveFeedbackOnly(){
+  localStorage.setItem(FBKEY, JSON.stringify(feedbacks));
+  if(!isConfigured) return;
+  try{ await sbSet(FBKEY, feedbacks); } catch(e){}
+}
+
+function deleteFeedback(idx){
+  if(!confirm('Remove this feedback?')) return;
+  feedbacks.splice(idx,1);
+  renderFeedback();
+  saveFeedbackOnly();
 }
 
 load();
