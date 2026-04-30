@@ -16,6 +16,7 @@
     --amber:#C9A31A;--amber-bg:#FEFBE6;--amber-text:#8A6C00;
     --red:#C0392B;--red-bg:#FEF0EF;--red-text:#A0291E;
     --blue:#2E5FAC;--blue-bg:#EDF3FB;--blue-text:#1F4E8A;
+    --sidebar-w:220px;
   }
   @media(prefers-color-scheme:dark){
     :root{
@@ -28,32 +29,72 @@
       --blue-bg:#0d1a2b;--blue-text:#80aaee;
     }
   }
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
-  .page{max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
-  .top-bar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:16px}
-  .logo-area h1{font-size:24px;font-weight:600;color:var(--text);letter-spacing:-0.4px}
-  .logo-area p{font-size:13px;color:var(--text2);margin-top:4px}
-  .top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .btn{padding:7px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg);color:var(--text2);transition:all 0.15s;font-family:inherit}
-  .btn:hover{background:var(--bg2);color:var(--text)}
-  .btn-danger{color:var(--red);border-color:#f0b8b8}
-  .btn-danger:hover{background:var(--red-bg)}
-  .sync-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);margin-bottom:1.75rem;font-size:12px;color:var(--text2)}
-  .sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:var(--border2);transition:background 0.4s}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;display:flex}
+
+  /* ── SIDEBAR ─────────────────────────────────────────────── */
+  .sidebar{
+    width:var(--sidebar-w);flex-shrink:0;
+    background:var(--bg);border-right:1px solid var(--border);
+    min-height:100vh;display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+  }
+  .sidebar-logo{padding:22px 20px 16px;border-bottom:1px solid var(--border)}
+  .sidebar-logo h1{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.3px;line-height:1.2}
+  .sidebar-logo p{font-size:11px;color:var(--text3);margin-top:3px}
+  .sidebar-nav{padding:12px 10px;flex:1}
+  .nav-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;padding:0 10px;margin:12px 0 6px}
+  .nav-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 10px;border-radius:var(--radius-sm);
+    cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);
+    transition:all 0.15s;user-select:none;border:none;background:none;width:100%;text-align:left;
+    font-family:inherit;
+  }
+  .nav-item:hover{background:var(--bg2);color:var(--text)}
+  .nav-item.active{background:var(--bg3);color:var(--text);font-weight:600}
+  .nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .nav-badge{margin-left:auto;font-size:10px;font-weight:600;padding:2px 7px;border-radius:var(--radius-pill);background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+  .nav-badge.done-badge{background:var(--green-bg);color:var(--green-text);border-color:#A0E0BC}
+  .nav-badge.active-badge{background:var(--amber-bg);color:var(--amber-text);border-color:#F0D878}
+  .nav-badge.future-badge{background:var(--blue-bg);color:var(--blue-text);border-color:#B5D0F0}
+  .sidebar-sync{padding:14px 16px;border-top:1px solid var(--border);font-size:11px}
+  .sync-row{display:flex;align-items:center;gap:8px;color:var(--text3)}
+  .sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--border2);transition:background 0.4s}
   .sync-dot.synced{background:var(--green)}
   .sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}
   .sync-dot.error{background:var(--red)}
   .sync-dot.offline{background:var(--text3)}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
-  .sync-msg{flex:1}
-  .sync-time{color:var(--text3);margin-left:auto;white-space:nowrap;font-size:11px}
-  .setup-banner{background:var(--amber-bg);border:1px solid var(--amber-text);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:1.5rem;font-size:13px;color:var(--amber-text);display:none}
-  .setup-banner a{color:var(--amber-text);font-weight:600}
+  .sync-time{font-size:10px;color:var(--text3);margin-top:3px}
+
+  /* ── MAIN ────────────────────────────────────────────────── */
+  .main{flex:1;min-width:0;padding:2.5rem 2rem 4rem}
+
+  /* ── PANELS ──────────────────────────────────────────────── */
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* ── TOP BAR ─────────────────────────────────────────────── */
+  .top-bar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:16px}
+  .page-title{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.4px;line-height:1.2}
+  .page-subtitle{font-size:13px;color:var(--text2);margin-top:4px}
+  .top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn{padding:7px 14px;border-radius:var(--radius-pill);font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg);color:var(--text2);transition:all 0.15s;font-family:inherit}
+  .btn:hover{background:var(--bg2);color:var(--text)}
+  .btn-danger{color:var(--red);border-color:#f0b8b8}
+  .btn-danger:hover{background:var(--red-bg)}
+
+  /* ── ARCHIVE BADGE ───────────────────────────────────────── */
+  .archive-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--radius-pill);background:var(--bg3);border:1px solid var(--border);font-size:11px;font-weight:600;color:var(--text3);margin-bottom:1.25rem}
+
+  /* ── SUMMARY STRIP ───────────────────────────────────────── */
   .summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:2rem}
   .stat{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
   .stat-label{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
   .stat-num{font-size:26px;font-weight:600;color:var(--text)}
   .stat-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+  /* ── FILTERS ─────────────────────────────────────────────── */
   .filter-row{display:flex;gap:8px;margin-bottom:1.75rem;flex-wrap:wrap;align-items:center}
   .filter-label{font-size:12px;color:var(--text3);margin-right:4px;font-weight:500}
   .chip{padding:6px 14px;border-radius:var(--radius-pill);font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text2);transition:all 0.15s;font-weight:500}
@@ -62,6 +103,8 @@
   .chip.t-bronze.active{border-color:#B87333;color:#B87333;background:#fef6ef}
   .chip.t-gold.active{border-color:#C9A31A;color:#9A7B0A;background:#fefbe6}
   .chip.t-both.active{border-color:#27AE60;color:#1E7E46;background:#edfbf4}
+
+  /* ── CARDS ───────────────────────────────────────────────── */
   .sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.25rem;margin-bottom:2.5rem}
   .section-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:border-color 0.2s,box-shadow 0.2s}
   .section-card:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(0,0,0,0.08),0 8px 24px rgba(0,0,0,0.06)}
@@ -77,6 +120,9 @@
   .b-gold{background:#FEFAE6;color:#7A610A;border:1px solid #EDD87A}
   .b-all{background:var(--blue-bg);color:var(--blue-text);border:1px solid #B5D0F0}
   .b-both{background:var(--green-bg);color:var(--green-text);border:1px solid #A0E0BC}
+  .b-mvp{background:#F0F4FF;color:#3B4FCC;border:1px solid #B8C4F8}
+  .b-timber{background:#E8F8F5;color:#0E6655;border:1px solid #A0DDD0}
+  .b-future{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
   .chevron{font-size:11px;color:var(--text3);transition:transform 0.25s;margin-top:2px}
   .chevron.open{transform:rotate(180deg)}
   .prog-bg{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden}
@@ -105,6 +151,8 @@
   .add-input::placeholder{color:var(--text3)}
   .add-btn{padding:8px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all 0.15s;font-family:inherit}
   .add-btn:hover{background:var(--bg2);color:var(--text)}
+
+  /* ── ROADMAP SNAPSHOT ────────────────────────────────────── */
   .section-heading{font-size:17px;font-weight:600;color:var(--text);margin-bottom:1rem;letter-spacing:-0.2px}
   .roadmap-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .roadmap-col{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
@@ -113,21 +161,23 @@
   .col-label{font-size:13px;font-weight:600;color:var(--text)}
   .r-item{font-size:12px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);line-height:1.45}
   .r-item:last-child{border-bottom:none}
-  .footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-  .footer-text{font-size:12px;color:var(--text3)}
-  @media(max-width:700px){.roadmap-cols{grid-template-columns:1fr}.sections-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:repeat(2,1fr)}}
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.2s}
-  .modal-overlay.open{opacity:1;pointer-events:all}
-  .modal-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 28px 24px;max-width:380px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.18);transform:scale(0.95);transition:transform 0.2s}
-  .modal-overlay.open .modal-box{transform:scale(1)}
-  .modal-icon{width:40px;height:40px;border-radius:50%;background:var(--red-bg);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-  .modal-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
-  .modal-body{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px}
-  .modal-actions{display:flex;gap:10px;justify-content:flex-end}
-  .modal-cancel{padding:8px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg);color:var(--text2);font-family:inherit;transition:all 0.15s}
-  .modal-cancel:hover{background:var(--bg2);color:var(--text)}
-  .modal-confirm{padding:8px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--red);background:var(--red);color:#fff;font-family:inherit;transition:all 0.15s}
-  .modal-confirm:hover{opacity:0.88}
+  .r-item-editable{font-size:12px;color:var(--text2);padding:4px 0;display:flex;align-items:center;gap:8px}
+  .r-col-input{flex:1;padding:6px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:12px;outline:none;font-family:inherit}
+  .r-col-input:focus{border-color:var(--border2)}
+  .r-col-add{padding:5px 10px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg);color:var(--text2);font-size:11px;cursor:pointer;font-family:inherit}
+  .r-col-add:hover{background:var(--bg2)}
+  .r-col-del{font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;opacity:0;transition:opacity 0.15s}
+  .r-item-wrap:hover .r-col-del{opacity:1}
+  .r-col-del:hover{color:var(--red)}
+  .r-item-wrap{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--border)}
+  .r-item-wrap:last-of-type{border-bottom:none}
+  .r-item-wrap span{font-size:12px;color:var(--text2);flex:1;line-height:1.45}
+
+  /* ── FOCUS BANNER ────────────────────────────────────────── */
+  .focus-banner{background:var(--green-bg);border:1px solid #A0E0BC;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:1.5rem;font-size:13px;color:var(--green-text);display:flex;align-items:center;gap:10px}
+  .focus-banner strong{font-weight:600}
+
+  /* ── FEEDBACK ────────────────────────────────────────────── */
   .feedback-section{margin-top:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
   .feedback-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
   .feedback-card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
@@ -156,149 +206,281 @@
   .fb-row:hover .fb-row-del{opacity:1}
   .fb-row-del:hover{color:var(--red)}
   .fb-empty{font-size:13px;color:var(--text3);padding:24px 0;text-align:center}
-  .fb-count{font-size:12px;color:var(--text3);margin-top:4px}
-  @media(max-width:700px){.feedback-section{grid-template-columns:1fr}}
+
+  /* ── MODAL ───────────────────────────────────────────────── */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.2s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal-box{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px 28px 24px;max-width:380px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.18);transform:scale(0.95);transition:transform 0.2s}
+  .modal-overlay.open .modal-box{transform:scale(1)}
+  .modal-icon{width:40px;height:40px;border-radius:50%;background:var(--red-bg);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .modal-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .modal-body{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end}
+  .modal-cancel{padding:8px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg);color:var(--text2);font-family:inherit;transition:all 0.15s}
+  .modal-cancel:hover{background:var(--bg2);color:var(--text)}
+  .modal-confirm{padding:8px 18px;border-radius:var(--radius-pill);font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--red);background:var(--red);color:#fff;font-family:inherit;transition:all 0.15s}
+  .modal-confirm:hover{opacity:0.88}
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  .footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .footer-text{font-size:12px;color:var(--text3)}
+
+  /* ── SETUP BANNER ────────────────────────────────────────── */
+  .setup-banner{background:var(--amber-bg);border:1px solid var(--amber-text);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:1.5rem;font-size:13px;color:var(--amber-text);display:none}
+  .setup-banner a{color:var(--amber-text);font-weight:600}
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media(max-width:900px){
+    body{flex-direction:column}
+    .sidebar{width:100%;min-height:auto;height:auto;position:static;flex-direction:row;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--border)}
+    .sidebar-logo{flex:1;min-width:180px;padding:14px 16px 12px}
+    .sidebar-nav{padding:8px 10px;display:flex;flex-wrap:wrap;gap:4px;flex-direction:row;align-items:center}
+    .nav-label{display:none}
+    .sidebar-sync{border-top:none;border-left:1px solid var(--border);padding:10px 14px}
+    .nav-item{width:auto}
+    .roadmap-cols{grid-template-columns:1fr}
+    .sections-grid{grid-template-columns:1fr}
+    .summary-strip{grid-template-columns:repeat(2,1fr)}
+    .feedback-section{grid-template-columns:1fr}
+    .main{padding:1.5rem 1rem 3rem}
+  }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <div class="top-bar">
-    <div class="logo-area">
-      <h1>Oritain Platform</h1>
-      <p>Living document — progress syncs across all your devices</p>
+<!-- ══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>Oritain Platform</h1>
+    <p>Living document</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Versions</div>
+    <button class="nav-item active" onclick="switchTab('proto',this)" id="nav-proto">
+      <span class="nav-dot" style="background:#9aa0ad"></span>
+      <span>Prototype v1.0</span>
+      <span class="nav-badge" id="nbadge-proto">Archive</span>
+    </button>
+    <div class="nav-label" style="margin-top:8px">Active roadmap</div>
+    <button class="nav-item" onclick="switchTab('mvp',this)" id="nav-mvp">
+      <span class="nav-dot" style="background:#C9A31A"></span>
+      <span>May → July · MVP</span>
+      <span class="nav-badge active-badge" id="nbadge-mvp">Active</span>
+    </button>
+    <div class="nav-label" style="margin-top:8px">Future</div>
+    <button class="nav-item" onclick="switchTab('future',this)" id="nav-future">
+      <span class="nav-dot" style="background:#2E5FAC"></span>
+      <span>July+ · Future scope</span>
+      <span class="nav-badge future-badge" id="nbadge-future">Backlog</span>
+    </button>
+  </nav>
+  <div class="sidebar-sync">
+    <div class="sync-row">
+      <div class="sync-dot syncing" id="syncDot"></div>
+      <span id="syncMsg">Connecting...</span>
     </div>
-    <div class="top-actions">
-      <button class="btn" onclick="expandAll()">Expand all</button>
-      <button class="btn" onclick="collapseAll()">Collapse all</button>
-      <button class="btn btn-danger" onclick="resetAll()">Reset progress</button>
-    </div>
+    <div class="sync-time" id="syncTime"></div>
   </div>
+</aside>
 
-  <div class="setup-banner" id="setupBanner">
-    ⚠️ Supabase not configured yet — progress is saving locally only. <a href="#" onclick="showSetup()">Click here to set up sync →</a>
-  </div>
+<!-- ══ MAIN ════════════════════════════════════════════════ -->
+<main class="main">
 
-  <div class="sync-bar">
-    <div class="sync-dot syncing" id="syncDot"></div>
-    <span class="sync-msg" id="syncMsg">Connecting...</span>
-    <span class="sync-time" id="syncTime"></span>
-  </div>
-
-  <div class="summary-strip" id="summaryStrip"></div>
-
-  <div class="filter-row">
-    <span class="filter-label">Filter by tier:</span>
-    <div class="chip t-all active" onclick="filterTier('all',this)">All tiers</div>
-    <div class="chip t-bronze" onclick="filterTier('bronze',this)">Bronze</div>
-    <div class="chip t-gold" onclick="filterTier('gold',this)">Gold</div>
-    <div class="chip t-both" onclick="filterTier('both',this)">Both tiers</div>
-  </div>
-
-  <div class="sections-grid" id="sectionsGrid"></div>
-
-  <div style="margin-top:0.5rem">
-    <div class="section-heading">Roadmap snapshot</div>
-    <div class="roadmap-cols">
-      <div class="roadmap-col">
-        <div class="col-head"><div class="col-dot" style="background:#27AE60"></div><div class="col-label">Designed &amp; done</div></div>
-        <div class="r-item">Platform architecture + tier logic</div>
-        <div class="r-item">Full design system in Lovable</div>
-        <div class="r-item">Bronze &amp; Gold dashboard views</div>
-        <div class="r-item">Book test + upload template flow</div>
-        <div class="r-item">My Network — butterfly map</div>
-        <div class="r-item">Insights &amp; Intelligence layer</div>
-        <div class="r-item">QBR module — concept + layout</div>
-        <div class="r-item">GitHub integration set up</div>
-        <div class="r-item">Decision log — 19 features documented</div>
+  <!-- ── PANEL 1: PROTOTYPE V1.0 ─────────────────────────── -->
+  <div class="panel active" id="panel-proto">
+    <div class="top-bar">
+      <div>
+        <div class="page-title">Prototype v1.0</div>
+        <div class="page-subtitle">Original design sprint — preserved as reference</div>
       </div>
-      <div class="roadmap-col">
-        <div class="col-head"><div class="col-dot" style="background:#C9A31A"></div><div class="col-label">In progress / scoped</div></div>
-        <div class="r-item">Filter template save &amp; load end-to-end</div>
-        <div class="r-item">Test count sync across all tabs</div>
-        <div class="r-item">Global consistency check</div>
-        <div class="r-item">Empty state designs — all sections</div>
-        <div class="r-item">Mobile responsiveness pass</div>
-        <div class="r-item">Light in-platform messaging</div>
-        <div class="r-item">Accessibility contrast &amp; ARIA pass</div>
-      </div>
-      <div class="roadmap-col">
-        <div class="col-head"><div class="col-dot" style="background:#B87333"></div><div class="col-label">Bonus / next round</div></div>
-        <div class="r-item">Get a Tour — product walkthrough</div>
-        <div class="r-item">Loading &amp; skeleton states</div>
-        <div class="r-item">Replace Cotton &amp; Timber icons with SVGs</div>
-        <div class="r-item">AI recommendations — deeper logic</div>
-        <div class="r-item">Supplier-side platform experience</div>
-        <div class="r-item">Real-time data infrastructure</div>
-        <div class="r-item">Payment &amp; billing module</div>
+      <div class="top-actions">
+        <button class="btn" onclick="expandAll('proto')">Expand all</button>
+        <button class="btn" onclick="collapseAll('proto')">Collapse all</button>
+        <button class="btn btn-danger" onclick="resetAll('proto')">Reset progress</button>
       </div>
     </div>
-  </div>
 
-  <div class="feedback-section">
-    <div class="feedback-card">
-      <div class="feedback-card-title">Leave feedback</div>
-      <div class="feedback-card-sub">Reviewing the prototype? Drop your thoughts here — it goes straight to the live feed.</div>
-      <div style="margin-bottom:10px">
-        <div style="font-size:12px;color:var(--text3);margin-bottom:8px;font-weight:500">Who are you?</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px" id="fb-name-picker">
-          <button class="fb-name-btn" onclick="selectName(this,'Aiden')">Aiden</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Harry')">Harry</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Phil')">Phil</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Anouk')">Anouk</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Charlotte')">Charlotte</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Olya')">Olya</button>
-          <button class="fb-name-btn" onclick="selectName(this,'Anonymous')">Anonymous</button>
+    <div class="archive-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36 0-2.54-2.06-4.64-4.6-4.64C11.9.0 10.5.88 9.72 2.12 9.0.88 7.64 0 6.12 0 3.54 0 1.48 2.06 1.48 4.64c0 .48.11.92.18 1.36H0v14h2v-2h18v2h2V6h-2zm-10 12H4V8h6v10zm8 0h-6V8h6v10z"/></svg>
+      Archived · read-only reference
+    </div>
+
+    <div class="setup-banner" id="setupBanner">
+      ⚠️ Supabase not configured yet — progress is saving locally only.
+    </div>
+
+    <div class="summary-strip" id="summaryStrip-proto"></div>
+
+    <div class="filter-row">
+      <span class="filter-label">Filter by tier:</span>
+      <div class="chip t-all active" onclick="filterTier('all',this,'proto')">All tiers</div>
+      <div class="chip t-bronze" onclick="filterTier('bronze',this,'proto')">Bronze</div>
+      <div class="chip t-gold" onclick="filterTier('gold',this,'proto')">Gold</div>
+      <div class="chip t-both" onclick="filterTier('both',this,'proto')">Both tiers</div>
+    </div>
+
+    <div class="sections-grid" id="sectionsGrid-proto"></div>
+
+    <div style="margin-top:0.5rem">
+      <div class="section-heading">Roadmap snapshot · v1.0</div>
+      <div class="roadmap-cols">
+        <div class="roadmap-col">
+          <div class="col-head"><div class="col-dot" style="background:#27AE60"></div><div class="col-label">Designed &amp; done</div></div>
+          <div class="r-item">Platform architecture + tier logic</div>
+          <div class="r-item">Full design system in Lovable</div>
+          <div class="r-item">Bronze &amp; Gold dashboard views</div>
+          <div class="r-item">Book test + upload template flow</div>
+          <div class="r-item">My Network — butterfly map</div>
+          <div class="r-item">Insights &amp; Intelligence layer</div>
+          <div class="r-item">QBR module — concept + layout</div>
+          <div class="r-item">GitHub integration set up</div>
+          <div class="r-item">Decision log — 19 features documented</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="col-head"><div class="col-dot" style="background:#C9A31A"></div><div class="col-label">In progress / scoped</div></div>
+          <div class="r-item">Filter template save &amp; load end-to-end</div>
+          <div class="r-item">Test count sync across all tabs</div>
+          <div class="r-item">Global consistency check</div>
+          <div class="r-item">Empty state designs — all sections</div>
+          <div class="r-item">Mobile responsiveness pass</div>
+          <div class="r-item">Light in-platform messaging</div>
+          <div class="r-item">Accessibility contrast &amp; ARIA pass</div>
+        </div>
+        <div class="roadmap-col">
+          <div class="col-head"><div class="col-dot" style="background:#B87333"></div><div class="col-label">Bonus / next round</div></div>
+          <div class="r-item">Get a Tour — product walkthrough</div>
+          <div class="r-item">Loading &amp; skeleton states</div>
+          <div class="r-item">Replace Cotton &amp; Timber icons with SVGs</div>
+          <div class="r-item">AI recommendations — deeper logic</div>
+          <div class="r-item">Supplier-side platform experience</div>
+          <div class="r-item">Real-time data infrastructure</div>
+          <div class="r-item">Payment &amp; billing module</div>
         </div>
       </div>
-      <input type="hidden" id="fb-name" value="">
-      <select class="fb-section-sel" id="fb-section">
-        <option value="">Which section is this about?</option>
-        <option>Platform overview</option>
-        <option>Discovery & onboarding</option>
-        <option>Bronze tier</option>
-        <option>Gold tier</option>
-        <option>Tests & book test</option>
-        <option>Reports</option>
-        <option>Insights & intelligence</option>
-        <option>My network</option>
-        <option>Upsell & tiers</option>
-        <option>Decision log</option>
-        <option>General / overall</option>
-        <option>Other</option>
-      </select>
-      <textarea class="fb-textarea" id="fb-text" placeholder="What did you think? What's working, what's not, what's missing..."></textarea>
-      <button class="fb-submit" id="fb-btn" onclick="submitFeedback()">Send feedback</button>
     </div>
-    <div class="feedback-card">
-      <div class="feedback-card-title">Team feedback</div>
-      <div class="feedback-card-sub" id="fb-count-label">All feedback from your reviewers — live and synced.</div>
-      <ul class="fb-rows" id="fb-rows"><li class="fb-empty">No feedback yet — share the link with your team.</li></ul>
-    </div>
-  </div>
 
-  <div class="modal-overlay" id="resetModal" onclick="handleModalOverlayClick(event)">
-    <div class="modal-box">
-      <div class="modal-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
-        </svg>
+    <div class="feedback-section">
+      <div class="feedback-card">
+        <div class="feedback-card-title">Leave feedback</div>
+        <div class="feedback-card-sub">Reviewing the prototype? Drop your thoughts here — it goes straight to the live feed.</div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px;font-weight:500">Who are you?</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <button class="fb-name-btn" onclick="selectName(this,'Aiden')">Aiden</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Harry')">Harry</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Phil')">Phil</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Anouk')">Anouk</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Charlotte')">Charlotte</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Olya')">Olya</button>
+            <button class="fb-name-btn" onclick="selectName(this,'Anonymous')">Anonymous</button>
+          </div>
+        </div>
+        <input type="hidden" id="fb-name" value="">
+        <select class="fb-section-sel" id="fb-section">
+          <option value="">Which section is this about?</option>
+          <option>Platform overview</option><option>Discovery &amp; onboarding</option>
+          <option>Bronze tier</option><option>Gold tier</option>
+          <option>Tests &amp; book test</option><option>Reports</option>
+          <option>Insights &amp; intelligence</option><option>My network</option>
+          <option>Upsell &amp; tiers</option><option>Decision log</option>
+          <option>General / overall</option><option>Other</option>
+        </select>
+        <textarea class="fb-textarea" id="fb-text" placeholder="What did you think? What's working, what's not, what's missing..."></textarea>
+        <button class="fb-submit" id="fb-btn" onclick="submitFeedback()">Send feedback</button>
       </div>
-      <div class="modal-title">Reset all progress?</div>
-      <div class="modal-body">This will clear every ticked checkbox across all sections. Your custom to-dos and feedback will stay. This cannot be undone.</div>
-      <div class="modal-actions">
-        <button class="modal-cancel" onclick="closeResetModal()">Cancel</button>
-        <button class="modal-confirm" onclick="confirmReset()">Yes, reset progress</button>
+      <div class="feedback-card">
+        <div class="feedback-card-title">Team feedback</div>
+        <div class="feedback-card-sub" id="fb-count-label">All feedback from your reviewers — live and synced.</div>
+        <ul class="fb-rows" id="fb-rows"><li class="fb-empty">No feedback yet — share the link with your team.</li></ul>
       </div>
     </div>
-  </div>
 
-  <div class="footer">
-    <span class="footer-text">Oritain Platform — Living Document</span>
-    <span class="footer-text" id="footerNote"></span>
+    <div class="footer">
+      <span class="footer-text">Oritain Platform — Prototype v1.0 · Archive</span>
+      <span class="footer-text" id="footerNote"></span>
+    </div>
+  </div><!-- /panel-proto -->
+
+  <!-- ── PANEL 2: MVP MAY → JULY ──────────────────────────── -->
+  <div class="panel" id="panel-mvp">
+    <div class="top-bar">
+      <div>
+        <div class="page-title">May → July · Changes + MVP</div>
+        <div class="page-subtitle">Real build — Timber Flow focus, no legacy systems</div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" onclick="expandAll('mvp')">Expand all</button>
+        <button class="btn" onclick="collapseAll('mvp')">Collapse all</button>
+        <button class="btn btn-danger" onclick="resetAll('mvp')">Reset progress</button>
+      </div>
+    </div>
+
+    <div class="focus-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 19.54 3 21 2 22 2 22s1.5-1 3-1c2 0 4-1 6-3 2-2 4-3 6-3s4 1 4 3v1c0 0 2-3 2-6 0-2.5-2-5-6-5z"/></svg>
+      <span><strong>MVP focus:</strong> Timber Flow — new platform, no legacy system integration. Build for clarity and speed.</span>
+    </div>
+
+    <div class="summary-strip" id="summaryStrip-mvp"></div>
+
+    <div class="sections-grid" id="sectionsGrid-mvp"></div>
+
+    <div style="margin-top:0.5rem">
+      <div class="section-heading">May → July · Build snapshot</div>
+      <div class="roadmap-cols" id="mvp-snapshot-cols">
+        <!-- Dynamically rendered editable columns -->
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-text">Oritain Platform — May → July · MVP</span>
+      <span class="footer-text" id="footerNote-mvp"></span>
+    </div>
+  </div><!-- /panel-mvp -->
+
+  <!-- ── PANEL 3: FUTURE SCOPE ─────────────────────────────── -->
+  <div class="panel" id="panel-future">
+    <div class="top-bar">
+      <div>
+        <div class="page-title">July+ · Scoped for future</div>
+        <div class="page-subtitle">Not now — but definitely on the radar</div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" onclick="expandAll('future')">Expand all</button>
+        <button class="btn" onclick="collapseAll('future')">Collapse all</button>
+        <button class="btn btn-danger" onclick="resetAll('future')">Reset progress</button>
+      </div>
+    </div>
+
+    <div class="summary-strip" id="summaryStrip-future"></div>
+
+    <div class="sections-grid" id="sectionsGrid-future"></div>
+
+    <div class="footer">
+      <span class="footer-text">Oritain Platform — July+ · Future scope</span>
+      <span class="footer-text" id="footerNote-future"></span>
+    </div>
+  </div><!-- /panel-future -->
+
+</main>
+
+<!-- ══ RESET MODAL ════════════════════════════════════════ -->
+<div class="modal-overlay" id="resetModal" onclick="handleModalOverlayClick(event)">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+      </svg>
+    </div>
+    <div class="modal-title">Reset all progress?</div>
+    <div class="modal-body">This will clear every ticked checkbox in this tab. Custom items and feedback will stay. This cannot be undone.</div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeResetModal()">Cancel</button>
+      <button class="modal-confirm" onclick="confirmReset()">Yes, reset progress</button>
+    </div>
   </div>
 </div>
 
+<!-- ══ SVG SYMBOLS ════════════════════════════════════════ -->
 <svg style="display:none"><defs>
   <symbol id="i-globe" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93s3.06-7.44 7-7.93v15.86zm2 0V4.07c3.94.49 7 3.85 7 7.93s-3.06 7.44-7 7.93z"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
@@ -313,23 +495,36 @@
   <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z"/></symbol>
   <symbol id="i-future" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L11 13V7h1.5v5.25l4.5 2.67-1.5 2.08z"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24"><path d="M17 12h-4V7h-2v5H7l5 5 5-5zm-5 7v2H6v2h12v-2h-6v-2z"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><path d="M9.5 6c0-1.38-1.12-2.5-2.5-2.5S4.5 4.62 4.5 6s1.12 2.5 2.5 2.5c.74 0 1.4-.3 1.88-.79L11.5 9c.09.31.14.64.14.99s-.05.68-.14.99l-2.62 1.29C8.4 10.8 7.74 10.5 7 10.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5c0-.08-.02-.16-.02-.23l2.73-1.35C12.54 12.42 13.5 13 14.5 13c1.38 0 2.5-1.12 2.5-2.5S15.88 8 14.5 8c-1 0-1.96.58-2.29 1.59L9.48 8.23C9.49 8.16 9.5 8.08 9.5 8v-2z"/></symbol>
+  <symbol id="i-scope" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></symbol>
 </defs></svg>
 
 <script>
 // ══════════════════════════════════════════════════════════
-//  CONFIGURATION — paste your Supabase values here
+//  CONFIGURATION
 // ══════════════════════════════════════════════════════════
-const SUPABASE_URL  = 'https://aiqdizvifkiylkwbesix.supabase.co';   // e.g. https://xxxx.supabase.co
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWRpenZpZmtpeWxrd2Jlc2l4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDEyODMsImV4cCI6MjA5MTUxNzI4M30.78rwjJ67B80tcBhD4nvVvpgIwwpPIsl3tIm-WqrPrzY'; // starts with eyJ...
-// ══════════════════════════════════════════════════════════
-
-const SK = 'oritain_checks_v4';
-const TK = 'oritain_todos_v4';
-const FK = 'oritain_future_v4';
-const FBKEY = 'oritain_feedback_v1';
+const SUPABASE_URL = 'https://aiqdizvifkiylkwbesix.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWRpenZpZmtpeWxrd2Jlc2l4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDEyODMsImV4cCI6MjA5MTUxNzI4M30.78rwjJ67B80tcBhD4nvVvpgIwwpPIsl3tIm-WqrPrzY';
 const isConfigured = SUPABASE_URL.startsWith('https://') && SUPABASE_KEY.startsWith('eyJ');
 
-const SECTIONS = [
+// ── Storage keys ──────────────────────────────────────────
+const SK       = 'oritain_checks_v4';       // proto checks
+const TK       = 'oritain_todos_v4';        // proto custom todos
+const FK       = 'oritain_future_v4';       // proto future bucket
+const FBKEY    = 'oritain_feedback_v1';     // feedback
+
+const SK_MVP   = 'oritain_mvp_checks_v1';
+const TK_MVP   = 'oritain_mvp_customs_v1';
+const COL_MVP  = 'oritain_mvp_cols_v1';
+
+const SK_FUT   = 'oritain_fut_checks_v1';
+const TK_FUT   = 'oritain_fut_customs_v1';
+
+// ══════════════════════════════════════════════════════════
+//  SECTION DEFINITIONS — PROTO (unchanged from v1.0)
+// ══════════════════════════════════════════════════════════
+const SECTIONS_PROTO = [
   {id:'overview',icon:'#i-globe',title:'Platform overview',subtitle:'The full system, end to end',tier:'all',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',
    items:[{t:'Discovery — why Oritain exists and why integrity matters'},{t:'Onboarding — ORCA programme design before any test is run'},{t:'Bronze tier — enough insight to build confidence'},{t:'Gold tier — decision-making, intelligence, and scale'},{t:'My Network — trust, origins, network effects'},{t:"Insights & Intelligence — explain what's happening and why"},{t:'Reports — decisions, not downloads'},{t:'Upsell logic — business model made visible'}]},
   {id:'discovery',icon:'#i-search',title:'Discovery & onboarding',subtitle:'Exists — intentionally abstracted',tier:'all',color:'#2980B9',iconBg:'#E8F4FD',pc:'#3498DB',
@@ -353,74 +548,132 @@ const SECTIONS = [
   {id:'done',icon:'#i-trophy',title:'What you have done',subtitle:'Your personal credibility weapon',tier:'all',color:'#1E5631',iconBg:'#E9F7EF',pc:'#27AE60',
    items:[{t:'Research — interviews & workshops',tag:'yes'},{t:'Synthesis — themes, HMWs, design decisions',tag:'yes'},{t:'Wireframes & flows — 10+ platform sections',tag:'yes'},{t:'Design system — built inside Lovable',tag:'yes'},{t:'Platform foundations — cohesive, reusable',tag:'yes'},{t:'GitHub integration — version control set up',tag:'yes'},{t:'Accessibility — considered from the start',tag:'yes'},{t:'Product thinking — tiers, upsell, business logic',tag:'yes'},{t:'Systems thinking — one platform, many roles',tag:'yes'}]},
   {id:'todos',icon:'#i-check',title:'Global to-dos',subtitle:'Platform-wide polish — add your own below',tier:'all',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
-   items:[{t:'Replace Cotton & Timber icons with SVGs'},{t:'Global consistency check — spacing, type, tone'},{t:'Test count sync across all tabs'},{t:'Upsell cue consistency — tone and placement'},{t:'Filter template save/load — end-to-end'},{t:'Mobile responsiveness check'},{t:'Empty state designs for all sections'},{t:'Accessibility pass — contrast & ARIA labels'},{t:'Add a subnav to Tests — Tests in Pipeline and All Tests'},{t:'Play with the Test counter on the top nav'},{t:'Test all Breadcrumbs'},{t:'Create Profile page — Personal info + History (bank statement inspired) + Your supply chain (ORCA design) + Tests & Subscription (test count, expiry, renewal) + Payment Method + Sharing Info'},{t:'Add To Do / Notifications in dashboard — card with to-dos, opens in side panel with actions, CTA takes to relevant place'},{t:'Add info in onboarding — questionnaire for admin side (TBD: tooltip or alert banner)'},{t:'Verify Gold unlocked cards — premium badge + tooltip'},{t:'Tier Progress Animation'},{t:'Clean up the Tests Breakdown — details of what goes under each tab'},{t:'Clean up Handshake'}]},
-  {id:'scoped',icon:'#i-future',title:'Scoped for future',subtitle:'Not now — but definitely on the radar. Add your own below.',tier:'all',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',futureBucket:true,
+   items:[{t:'Replace Cotton & Timber icons with SVGs'},{t:'Global consistency check — spacing, type, tone'},{t:'Test count sync across all tabs'},{t:'Upsell cue consistency — tone and placement'},{t:'Filter template save/load — end-to-end'},{t:'Mobile responsiveness check'},{t:'Empty state designs for all sections'},{t:'Accessibility pass — contrast & ARIA labels'},{t:'Add a subnav to Tests — Tests in Pipeline and All Tests'},{t:'Play with the Test counter on the top nav'},{t:'Test all Breadcrumbs'},{t:'Create Profile page — Personal info + History + Your supply chain + Tests & Subscription + Payment Method + Sharing Info'},{t:'Add To Do / Notifications in dashboard — card with to-dos, opens in side panel'},{t:'Add info in onboarding — questionnaire for admin side'},{t:'Verify Gold unlocked cards — premium badge + tooltip'},{t:'Tier Progress Animation'},{t:'Clean up the Tests Breakdown — details of what goes under each tab'},{t:'Clean up Handshake'}]},
+  {id:'scoped',icon:'#i-future',title:'Scoped for future (v1.0)',subtitle:'Not now — but definitely on the radar. Add your own below.',tier:'all',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',futureBucket:true,
    items:[{t:'Internal sampling app — acknowledged but not shown',tag:'Discovery'},{t:'Light in-platform messaging — coordinate without replacing email',tag:'My Network'},{t:'Get a Tour — in-platform product walkthrough for new users',tag:'To-Dos'},{t:'Loading & skeleton states — especially for Intelligence and network map',tag:'To-Dos'},{t:'Supplier-side full platform experience — brand POV first, supplier POV next'},{t:'Full AI recommendation engine — deeper logic as data volume grows'},{t:'Real-time data infrastructure — live pipelines once product vision is validated'},{t:'Payment & billing module — invoicing and contract management'},{t:'Enforcement & legal action logic — escalation path for failed tests'},{t:'Full messaging platform — if light messaging proves insufficient'},{t:'Mobile app — field-facing or client-facing native experience'},{t:'Supplier portal — dedicated experience built from the supplier point of view'}]},
 ];
 
+// ══════════════════════════════════════════════════════════
+//  SECTION DEFINITIONS — MVP (skeleton — you populate these)
+// ══════════════════════════════════════════════════════════
+const SECTIONS_MVP = [
+  {id:'mvp-scope',icon:'#i-log',title:'MVP scope',subtitle:'What is in, what is out — the honest version',tier:'mvp',color:'#3B4FCC',iconBg:'#F0F4FF',pc:'#3B4FCC',editable:true,
+   items:[]},
+  {id:'mvp-timber',icon:'#i-tree',title:'Timber Flow — core',subtitle:'The primary flow for MVP. No legacy system dependencies.',tier:'timber',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',editable:true,
+   items:[]},
+  {id:'mvp-onboarding',icon:'#i-search',title:'Onboarding',subtitle:'First-run experience for Timber users',tier:'timber',color:'#2980B9',iconBg:'#E8F4FD',pc:'#3498DB',editable:true,
+   items:[]},
+  {id:'mvp-dashboard',icon:'#i-globe',title:'Dashboard',subtitle:'What the user sees on day one',tier:'timber',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',editable:true,
+   items:[]},
+  {id:'mvp-tests',icon:'#i-flask',title:'Tests & booking',subtitle:'Book, track, receive — the core loop',tier:'timber',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',editable:true,
+   items:[]},
+  {id:'mvp-reports',icon:'#i-doc',title:'Reports',subtitle:'What gets delivered and how',tier:'timber',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
+   items:[]},
+  {id:'mvp-network',icon:'#i-network',title:'My network',subtitle:'Supplier visibility for this phase',tier:'timber',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',editable:true,
+   items:[]},
+  {id:'mvp-decisions',icon:'#i-log',title:'Decision log · MVP',subtitle:'Choices made during this phase',tier:'mvp',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',editable:true,
+   items:[]},
+  {id:'mvp-changes',icon:'#i-arrow',title:'Changes from v1.0',subtitle:'What shifted, simplified, or was cut',tier:'mvp',color:'#C9A31A',iconBg:'#FEFAE6',pc:'#C9A31A',editable:true,
+   items:[]},
+  {id:'mvp-todos',icon:'#i-check',title:'MVP to-dos',subtitle:'Open tasks for this build phase',tier:'mvp',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
+   items:[]},
+];
+
+// ══════════════════════════════════════════════════════════
+//  SECTION DEFINITIONS — FUTURE SCOPE
+// ══════════════════════════════════════════════════════════
+const SECTIONS_FUTURE = [
+  {id:'fut-phase2',icon:'#i-scope',title:'Phase 2 — next release',subtitle:'Defined but not yet scheduled',tier:'future',color:'#2E5FAC',iconBg:'#EDF3FB',pc:'#2E5FAC',editable:true,
+   items:[]},
+  {id:'fut-timber-ext',icon:'#i-tree',title:'Timber — extended features',subtitle:'Features beyond MVP scope for Timber',tier:'future',color:'#0E6655',iconBg:'#E8F8F5',pc:'#17A589',editable:true,
+   items:[]},
+  {id:'fut-other-commodities',icon:'#i-globe',title:'Other commodities',subtitle:'Cotton and beyond — when we get there',tier:'future',color:'#9A7B0A',iconBg:'#FEFAE6',pc:'#C9A31A',editable:true,
+   items:[]},
+  {id:'fut-supplier',icon:'#i-network',title:'Supplier-side experience',subtitle:'The supplier POV — full platform',tier:'future',color:'#2C3E50',iconBg:'#F0F3F6',pc:'#4A6FA5',editable:true,
+   items:[]},
+  {id:'fut-ai',icon:'#i-bulb',title:'AI & intelligence expansion',subtitle:'Deeper logic as data volume grows',tier:'future',color:'#1F3864',iconBg:'#EDF3FB',pc:'#2E5FAC',editable:true,
+   items:[]},
+  {id:'fut-infra',icon:'#i-flow',title:'Infrastructure & platform',subtitle:'Real-time data, billing, mobile',tier:'future',color:'#4A235A',iconBg:'#F5EEF8',pc:'#8E44AD',editable:true,
+   items:[]},
+  {id:'fut-parking',icon:'#i-future',title:'Parking lot',subtitle:'Good ideas — no home yet. Add yours below.',tier:'future',color:'#9aa0ad',iconBg:'var(--bg3)',pc:'#9aa0ad',editable:true,
+   items:[]},
+];
+
+// ══════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════
+// Proto
 let checks  = {};
 let customs = [];
 let futures = [];
 let feedbacks = [];
-let saveTimer = null;
 
-// ── Supabase helpers ──────────────────────────────────────────────────────────
+// MVP
+let checksM  = {};
+let customsM = {}; // keyed by section id
+let mvpCols  = {
+  doing:  [],
+  done:   [],
+  blocked:[]
+};
+
+// Future
+let checksF  = {};
+let customsF = {}; // keyed by section id
+
+let saveTimer = null;
+let resetTarget = null;
+
+// ── Supabase helpers ──────────────────────────────────────
 async function sbGet(key){
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/progress?key=eq.${key}&select=value`, {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/progress?key=eq.${key}&select=value`,{
     headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
   });
   if(!r.ok) throw new Error('fetch failed');
   const data = await r.json();
   return data.length ? JSON.parse(data[0].value) : null;
 }
-
-async function sbSet(key, value){
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/progress`, {
+async function sbSet(key,value){
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/progress`,{
     method:'POST',
-    headers:{
-      'apikey':SUPABASE_KEY,
-      'Authorization':'Bearer '+SUPABASE_KEY,
-      'Content-Type':'application/json',
-      'Prefer':'resolution=merge-duplicates'
-    },
+    headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},
     body: JSON.stringify({key, value: JSON.stringify(value), updated_at: new Date().toISOString()})
   });
   if(!r.ok) throw new Error('save failed');
 }
 
-// ── sync UI ───────────────────────────────────────────────────────────────────
+// ── Sync UI ───────────────────────────────────────────────
 function setSync(state, msg, time){
   document.getElementById('syncDot').className = 'sync-dot ' + (state||'');
   document.getElementById('syncMsg').textContent = msg;
   if(time !== undefined) document.getElementById('syncTime').textContent = time;
 }
-
 function now(){ return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
 
-// ── load ──────────────────────────────────────────────────────────────────────
+// ── Load ──────────────────────────────────────────────────
 async function load(){
   if(!isConfigured){
-    document.getElementById('setupBanner').style.display = 'block';
-    setSync('offline','Working offline — progress saves in this browser only','');
-    loadLocal();
-    renderAll();
-    return;
+    document.getElementById('setupBanner').style.display='block';
+    setSync('offline','Working offline — saves locally','');
+    loadLocal(); renderAll(); return;
   }
   setSync('syncing','Loading your progress...');
   try {
-    const [c, t, fu, fb] = await Promise.all([sbGet(SK), sbGet(TK), sbGet(FK), sbGet(FBKEY).catch(()=>null)]);
-    if(c) checks  = c;
-    if(t) customs = t;
-    if(fu) futures = fu;
-    if(fb) feedbacks = fb;
-    setSync('synced','Synced — same progress on all your devices', now());
-    document.getElementById('footerNote').textContent = 'Last synced ' + now();
+    const [c,t,fu,fb,cm,colm,cf] = await Promise.all([
+      sbGet(SK), sbGet(TK), sbGet(FK), sbGet(FBKEY).catch(()=>null),
+      sbGet(SK_MVP), sbGet(COL_MVP), sbGet(SK_FUT)
+    ]);
+    if(c) checks=c; if(t) customs=t; if(fu) futures=fu; if(fb) feedbacks=fb;
+    if(cm) checksM=cm.checks||{}; if(cm && cm.customs) customsM=cm.customs;
+    if(colm) mvpCols=colm;
+    if(cf) checksF=cf.checks||{}; if(cf && cf.customs) customsF=cf.customs;
+    setSync('synced','Synced — same progress on all devices', 'Saved '+now());
+    document.getElementById('footerNote').textContent = 'Last synced '+now();
   } catch(e){
-    setSync('error','Could not reach Supabase — working from local storage');
+    setSync('error','Could not reach Supabase — working locally');
     loadLocal();
   }
-  renderAll();
-  renderFeedback();
+  renderAll(); renderFeedback(); renderMVPSnapshot();
 }
 
 function loadLocal(){
@@ -428,43 +681,51 @@ function loadLocal(){
   try{ customs = JSON.parse(localStorage.getItem(TK)||'[]'); }catch(e){}
   try{ futures = JSON.parse(localStorage.getItem(FK)||'[]'); }catch(e){}
   try{ feedbacks = JSON.parse(localStorage.getItem(FBKEY)||'[]'); }catch(e){}
+  try{ const d=JSON.parse(localStorage.getItem(SK_MVP)||'{}'); checksM=d.checks||{}; customsM=d.customs||{}; }catch(e){}
+  try{ mvpCols = JSON.parse(localStorage.getItem(COL_MVP)||'{"doing":[],"done":[],"blocked":[]}'); }catch(e){}
+  try{ const d=JSON.parse(localStorage.getItem(SK_FUT)||'{}'); checksF=d.checks||{}; customsF=d.customs||{}; }catch(e){}
 }
 
-// ── save ──────────────────────────────────────────────────────────────────────
+// ── Save ──────────────────────────────────────────────────
 async function save(){
   localStorage.setItem(SK, JSON.stringify(checks));
   localStorage.setItem(TK, JSON.stringify(customs));
   localStorage.setItem(FK, JSON.stringify(futures));
   localStorage.setItem(FBKEY, JSON.stringify(feedbacks));
+  localStorage.setItem(SK_MVP, JSON.stringify({checks:checksM, customs:customsM}));
+  localStorage.setItem(COL_MVP, JSON.stringify(mvpCols));
+  localStorage.setItem(SK_FUT, JSON.stringify({checks:checksF, customs:customsF}));
   if(!isConfigured) return;
   setSync('syncing','Saving...');
   try {
-    await Promise.all([sbSet(SK, checks), sbSet(TK, customs), sbSet(FK, futures), sbSet(FBKEY, feedbacks)]);
-    const t = now();
-    setSync('synced','Saved — synced across all your devices', 'Saved ' + t);
-    document.getElementById('footerNote').textContent = 'Last synced ' + t;
+    await Promise.all([
+      sbSet(SK,checks), sbSet(TK,customs), sbSet(FK,futures), sbSet(FBKEY,feedbacks),
+      sbSet(SK_MVP,{checks:checksM,customs:customsM}),
+      sbSet(COL_MVP,mvpCols),
+      sbSet(SK_FUT,{checks:checksF,customs:customsF})
+    ]);
+    const t=now();
+    setSync('synced','Saved — synced across all devices','Saved '+t);
+    ['footerNote','footerNote-mvp','footerNote-future'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.textContent='Last synced '+t;
+    });
   } catch(e){
-    setSync('error','Cloud save failed — saved locally, will retry next time');
+    setSync('error','Cloud save failed — saved locally');
   }
 }
+function scheduleSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(save,600); }
 
-function scheduleSave(){
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(save, 600);
-}
-
-// ── render ────────────────────────────────────────────────────────────────────
+// ── Shared render helpers ─────────────────────────────────
 function tagHTML(tag){
   if(!tag) return '';
-  const map = {yes:['n-yes','In'],no:['n-no','Out'],scope:['n-scope','Scoped']};
-  const m = map[tag];
+  const map={yes:['n-yes','In'],no:['n-no','Out'],scope:['n-scope','Scoped']};
+  const m=map[tag];
   if(m) return `<span class="note-tag ${m[0]}">${m[1]}</span>`;
-  // section label — amber style with the section name
   return `<span class="note-tag n-section">${tag}</span>`;
 }
 function tierBadge(tier){
-  const map = {bronze:['b-bronze','Bronze'],gold:['b-gold','Gold'],both:['b-both','Both tiers']};
-  const m = map[tier]||['b-all','All tiers'];
+  const map={bronze:['b-bronze','Bronze'],gold:['b-gold','Gold'],both:['b-both','Both tiers'],mvp:['b-mvp','MVP'],timber:['b-timber','Timber'],future:['b-future','Future']};
+  const m=map[tier]||['b-all','All tiers'];
   return `<span class="tier-badge ${m[0]}">${m[1]}</span>`;
 }
 function tick(done){
@@ -475,26 +736,27 @@ function tick(done){
   </div>`;
 }
 
-function getItems(sec){
-  const base = sec.items.map((item,i)=>({text:item.t, done:!!(checks[sec.id]||{})[i], tag:item.tag||null, isCustom:false, isFuture:false, idx:i}));
+// ══════════════════════════════════════════════════════════
+//  PROTO RENDER
+// ══════════════════════════════════════════════════════════
+function getItemsProto(sec){
+  const base=sec.items.map((item,i)=>({text:item.t,done:!!(checks[sec.id]||{})[i],tag:item.tag||null,isCustom:false,isFuture:false,idx:i}));
   if(sec.futureBucket){
-    const extra = futures.map((c,ci)=>({text:c.t, done:!!c.done, tag:null, isCustom:false, isFuture:true, futureIdx:ci}));
+    const extra=futures.map((c,ci)=>({text:c.t,done:!!c.done,tag:null,isCustom:false,isFuture:true,futureIdx:ci}));
     return [...base,...extra];
   }
   if(sec.editable){
-    const extra = customs.map((c,ci)=>({text:c.t, done:!!c.done, tag:null, isCustom:true, isFuture:false, customIdx:ci}));
+    const extra=customs.map((c,ci)=>({text:c.t,done:!!c.done,tag:null,isCustom:true,isFuture:false,customIdx:ci}));
     return [...base,...extra];
   }
   return base;
 }
-
-function progressFor(sec){
-  const items = getItems(sec);
-  const done = items.filter(i=>i.done).length;
-  return {done, total:items.length, pct:items.length ? Math.round((done/items.length)*100) : 0};
+function progressFor(sec,getItemsFn){
+  const items=getItemsFn(sec);
+  const done=items.filter(i=>i.done).length;
+  return {done,total:items.length,pct:items.length?Math.round((done/items.length)*100):0};
 }
-
-function liHTML(secId, item){
+function liHTMLProto(secId,item){
   if(item.isFuture){
     return `<li onclick="toggleFuture(${item.futureIdx})">
       ${tick(item.done)}
@@ -503,35 +765,36 @@ function liHTML(secId, item){
     </li>`;
   }
   if(item.isCustom){
-    return `<li onclick="toggleCustom(${item.customIdx})">
+    return `<li onclick="toggleCustomProto(${item.customIdx})">
       ${tick(item.done)}
       <span class="check-label${item.done?' done':''}">${item.text}</span>
-      <button class="del-btn" onclick="event.stopPropagation();deleteCustom(${item.customIdx})" title="Remove">✕</button>
+      <button class="del-btn" onclick="event.stopPropagation();deleteCustomProto(${item.customIdx})" title="Remove">✕</button>
     </li>`;
   }
-  return `<li onclick="toggleCheck('${secId}',${item.idx})">
+  return `<li onclick="toggleCheckProto('${secId}',${item.idx})">
     ${tick(item.done)}
     <span class="check-label${item.done?' done':''}">${item.text}</span>
     ${tagHTML(item.tag)}
   </li>`;
 }
 
-function renderAll(){
-  const grid = document.getElementById('sectionsGrid');
-  grid.innerHTML = '';
-  SECTIONS.forEach(sec=>{
-    const {done,total,pct} = progressFor(sec);
-    const items = getItems(sec);
-    const listHTML = items.map(i=>liHTML(sec.id,i)).join('');
+function renderProto(){
+  const grid=document.getElementById('sectionsGrid-proto');
+  grid.innerHTML='';
+  SECTIONS_PROTO.forEach(sec=>{
+    const {done,total,pct}=progressFor(sec,getItemsProto);
+    const items=getItemsProto(sec);
+    const listHTML=items.map(i=>liHTMLProto(sec.id,i)).join('');
+    const ph = sec.futureBucket ? 'Add something for the future...' : 'Add a new to-do and press Enter...';
+    const addFn = sec.futureBucket ? 'addFuture()' : 'addCustomProto()';
     const addRow = (sec.editable || sec.futureBucket) ? `<div class="add-row">
-      <input class="add-input" id="inp-${sec.id}" type="text" placeholder="${sec.futureBucket ? 'Add something for the future...' : 'Add a new to-do and press Enter...'}" onkeydown="if(event.key==='Enter')${sec.futureBucket ? 'addFuture()' : 'addCustom()'}">
-      <button class="add-btn" onclick="${sec.futureBucket ? 'addFuture()' : 'addCustom()'}">+ Add</button>
+      <input class="add-input" id="inp-${sec.id}" type="text" placeholder="${ph}" onkeydown="if(event.key===&apos;Enter&apos;)${addFn}">
+      <button class="add-btn" onclick="${addFn}">+ Add</button>
     </div>` : '';
-
-    const card = document.createElement('div');
+    const card=document.createElement('div');
     card.className='section-card'; card.dataset.tier=sec.tier; card.dataset.id=sec.id;
     card.innerHTML=`
-      <div class="card-header" onclick="toggleCard('${sec.id}')">
+      <div class="card-header" onclick="toggleCard('${sec.id}-proto')">
         <div class="card-header-top">
           <div class="card-title-group">
             <div class="card-icon-wrap" style="background:${sec.iconBg}">
@@ -540,152 +803,362 @@ function renderAll(){
             <div class="card-title">${sec.title}</div>
             <div class="card-subtitle">${sec.subtitle}</div>
           </div>
-          <div class="card-right">${tierBadge(sec.tier)}<div class="chevron" id="chev-${sec.id}">&#9660;</div></div>
+          <div class="card-right">${tierBadge(sec.tier)}<div class="chevron" id="chev-${sec.id}-proto">&#9660;</div></div>
         </div>
-        <div class="prog-bg"><div class="prog-fill" id="prog-${sec.id}" style="width:${pct}%;background:${sec.pc}"></div></div>
-        <div class="prog-label" id="plbl-${sec.id}">${done} / ${total} done</div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-${sec.id}-proto" style="width:${pct}%;background:${sec.pc}"></div></div>
+        <div class="prog-label" id="plbl-${sec.id}-proto">${done} / ${total} done</div>
       </div>
-      <div class="card-body" id="body-${sec.id}">
-        <ul class="checklist" id="list-${sec.id}">${listHTML}</ul>
+      <div class="card-body" id="body-${sec.id}-proto">
+        <ul class="checklist" id="list-${sec.id}-proto">${listHTML}</ul>
         ${addRow}
       </div>`;
     grid.appendChild(card);
   });
-  updateSummary();
+  updateSummary('proto', SECTIONS_PROTO, getItemsProto);
 }
 
-function refreshCard(secId){
-  const sec = SECTIONS.find(s=>s.id===secId);
-  const {done,total,pct} = progressFor(sec);
-  document.getElementById('prog-'+secId).style.width = pct+'%';
-  document.getElementById('plbl-'+secId).textContent = done+' / '+total+' done';
-  document.getElementById('list-'+secId).innerHTML = getItems(sec).map(i=>liHTML(secId,i)).join('');
-  updateSummary();
+function refreshCardProto(secId){
+  const sec=SECTIONS_PROTO.find(s=>s.id===secId); if(!sec) return;
+  const {done,total,pct}=progressFor(sec,getItemsProto);
+  document.getElementById('prog-'+secId+'-proto').style.width=pct+'%';
+  document.getElementById('plbl-'+secId+'-proto').textContent=done+' / '+total+' done';
+  document.getElementById('list-'+secId+'-proto').innerHTML=getItemsProto(sec).map(i=>liHTMLProto(secId,i)).join('');
+  updateSummary('proto',SECTIONS_PROTO,getItemsProto);
+}
+
+function toggleCheckProto(secId,idx){
+  if(!checks[secId]) checks[secId]={};
+  checks[secId][idx]=!checks[secId][idx];
+  refreshCardProto(secId); scheduleSave();
+}
+function toggleCustomProto(ci){ customs[ci].done=!customs[ci].done; refreshCardProto('todos'); scheduleSave(); }
+function deleteCustomProto(ci){ customs.splice(ci,1); refreshCardProto('todos'); scheduleSave(); }
+function addCustomProto(){
+  const inp=document.getElementById('inp-todos');
+  const text=inp.value.trim(); if(!text) return;
+  customs.push({t:text,done:false}); inp.value='';
+  openCard('todos-proto'); refreshCardProto('todos'); scheduleSave();
+}
+function toggleFuture(ci){ futures[ci].done=!futures[ci].done; refreshCardProto('scoped'); scheduleSave(); }
+function deleteFuture(ci){ futures.splice(ci,1); refreshCardProto('scoped'); scheduleSave(); }
+function addFuture(){
+  const inp=document.getElementById('inp-scoped');
+  const text=inp.value.trim(); if(!text) return;
+  futures.push({t:text,done:false}); inp.value='';
+  openCard('scoped-proto'); refreshCardProto('scoped'); scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════════
+//  MVP RENDER
+// ══════════════════════════════════════════════════════════
+function getCustomsMvp(secId){ return customsM[secId]||[]; }
+function getItemsMvp(sec){
+  const base=sec.items.map((item,i)=>({text:item.t,done:!!(checksM[sec.id]||{})[i],tag:item.tag||null,isCustom:false,idx:i}));
+  const extra=getCustomsMvp(sec.id).map((c,ci)=>({text:c.t,done:!!c.done,tag:null,isCustom:true,customIdx:ci,secId:sec.id}));
+  return [...base,...extra];
+}
+
+function liHTMLMvp(sec,item){
+  if(item.isCustom){
+    return `<li onclick="toggleCustomMvp('${sec.id}',${item.customIdx})">
+      ${tick(item.done)}
+      <span class="check-label${item.done?' done':''}">${item.text}</span>
+      <button class="del-btn" onclick="event.stopPropagation();deleteCustomMvp('${sec.id}',${item.customIdx})" title="Remove">✕</button>
+    </li>`;
+  }
+  return `<li onclick="toggleCheckMvp('${sec.id}',${item.idx})">
+    ${tick(item.done)}
+    <span class="check-label${item.done?' done':''}">${item.text}</span>
+    ${tagHTML(item.tag)}
+  </li>`;
+}
+
+function renderMvp(){
+  const grid=document.getElementById('sectionsGrid-mvp');
+  grid.innerHTML='';
+  SECTIONS_MVP.forEach(sec=>{
+    const {done,total,pct}=progressFor(sec,getItemsMvp);
+    const items=getItemsMvp(sec);
+    const listHTML=items.map(i=>liHTMLMvp(sec,i)).join('');
+    const addRow=`<div class="add-row">
+      <input class="add-input" id="inp-mvp-${sec.id}" type="text" placeholder="Add an item and press Enter..." onkeydown="if(event.key==='Enter')addCustomMvp('${sec.id}')">
+      <button class="add-btn" onclick="addCustomMvp('${sec.id}')">+ Add</button>
+    </div>`;
+    const card=document.createElement('div');
+    card.className='section-card'; card.dataset.tier=sec.tier; card.dataset.id=sec.id;
+    card.innerHTML=`
+      <div class="card-header" onclick="toggleCard('${sec.id}-mvp')">
+        <div class="card-header-top">
+          <div class="card-title-group">
+            <div class="card-icon-wrap" style="background:${sec.iconBg}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="${sec.color}"><use href="${sec.icon}"/></svg>
+            </div>
+            <div class="card-title">${sec.title}</div>
+            <div class="card-subtitle">${sec.subtitle}</div>
+          </div>
+          <div class="card-right">${tierBadge(sec.tier)}<div class="chevron" id="chev-${sec.id}-mvp">&#9660;</div></div>
+        </div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-${sec.id}-mvp" style="width:${pct}%;background:${sec.pc}"></div></div>
+        <div class="prog-label" id="plbl-${sec.id}-mvp">${done} / ${total} done</div>
+      </div>
+      <div class="card-body" id="body-${sec.id}-mvp">
+        <ul class="checklist" id="list-${sec.id}-mvp">${listHTML}</ul>
+        ${addRow}
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateSummary('mvp',SECTIONS_MVP,getItemsMvp);
+}
+
+function refreshCardMvp(secId){
+  const sec=SECTIONS_MVP.find(s=>s.id===secId); if(!sec) return;
+  const {done,total,pct}=progressFor(sec,getItemsMvp);
+  document.getElementById('prog-'+secId+'-mvp').style.width=pct+'%';
+  document.getElementById('plbl-'+secId+'-mvp').textContent=done+' / '+total+' done';
+  document.getElementById('list-'+secId+'-mvp').innerHTML=getItemsMvp(sec).map(i=>liHTMLMvp(sec,i)).join('');
+  updateSummary('mvp',SECTIONS_MVP,getItemsMvp);
+}
+
+function toggleCheckMvp(secId,idx){
+  if(!checksM[secId]) checksM[secId]={};
+  checksM[secId][idx]=!checksM[secId][idx];
+  refreshCardMvp(secId); scheduleSave();
+}
+function toggleCustomMvp(secId,ci){
+  if(!customsM[secId]) customsM[secId]=[];
+  customsM[secId][ci].done=!customsM[secId][ci].done;
+  refreshCardMvp(secId); scheduleSave();
+}
+function deleteCustomMvp(secId,ci){
+  customsM[secId].splice(ci,1);
+  refreshCardMvp(secId); scheduleSave();
+}
+function addCustomMvp(secId){
+  const inp=document.getElementById('inp-mvp-'+secId);
+  const text=inp.value.trim(); if(!text) return;
+  if(!customsM[secId]) customsM[secId]=[];
+  customsM[secId].push({t:text,done:false}); inp.value='';
+  openCard(secId+'-mvp'); refreshCardMvp(secId); scheduleSave();
+}
+
+// ── MVP snapshot (editable cols) ──────────────────────────
+function renderMVPSnapshot(){
+  const el=document.getElementById('mvp-snapshot-cols');
+  const cols=[
+    {key:'doing',label:'In progress',color:'#C9A31A'},
+    {key:'done',label:'Shipped ✓',color:'#27AE60'},
+    {key:'blocked',label:'Blocked / question',color:'#C0392B'},
+  ];
+  el.innerHTML=cols.map(col=>{
+    const items=mvpCols[col.key]||[];
+    const rowsHTML=items.length?items.map((txt,i)=>`
+      <div class="r-item-wrap" data-col="${col.key}" data-i="${i}">
+        <span>${txt}</span>
+        <button class="r-col-del" onclick="delColItem('${col.key}',${i})" title="Remove">✕</button>
+      </div>`).join(''):'<div style="font-size:12px;color:var(--text3);padding:6px 0">Nothing here yet</div>';
+    return `<div class="roadmap-col">
+      <div class="col-head"><div class="col-dot" style="background:${col.color}"></div><div class="col-label">${col.label}</div></div>
+      ${rowsHTML}
+      <div class="add-row" style="margin-top:10px;padding-top:10px">
+        <input class="r-col-input" id="col-inp-${col.key}" type="text" placeholder="Add item..." onkeydown="if(event.key==='Enter')addColItem('${col.key}')">
+        <button class="r-col-add" onclick="addColItem('${col.key}')">+ Add</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addColItem(key){
+  const inp=document.getElementById('col-inp-'+key);
+  const text=inp.value.trim(); if(!text) return;
+  if(!mvpCols[key]) mvpCols[key]=[];
+  mvpCols[key].push(text); inp.value='';
+  renderMVPSnapshot(); scheduleSave();
+}
+function delColItem(key,i){ mvpCols[key].splice(i,1); renderMVPSnapshot(); scheduleSave(); }
+
+// ══════════════════════════════════════════════════════════
+//  FUTURE RENDER
+// ══════════════════════════════════════════════════════════
+function getCustomsFut(secId){ return customsF[secId]||[]; }
+function getItemsFut(sec){
+  const base=sec.items.map((item,i)=>({text:item.t,done:!!(checksF[sec.id]||{})[i],tag:item.tag||null,isCustom:false,idx:i}));
+  const extra=getCustomsFut(sec.id).map((c,ci)=>({text:c.t,done:!!c.done,tag:null,isCustom:true,customIdx:ci,secId:sec.id}));
+  return [...base,...extra];
+}
+function liHTMLFut(sec,item){
+  if(item.isCustom){
+    return `<li onclick="toggleCustomFut('${sec.id}',${item.customIdx})">
+      ${tick(item.done)}
+      <span class="check-label${item.done?' done':''}">${item.text}</span>
+      <button class="del-btn" onclick="event.stopPropagation();deleteCustomFut('${sec.id}',${item.customIdx})" title="Remove">✕</button>
+    </li>`;
+  }
+  return `<li onclick="toggleCheckFut('${sec.id}',${item.idx})">
+    ${tick(item.done)}
+    <span class="check-label${item.done?' done':''}">${item.text}</span>
+    ${tagHTML(item.tag)}
+  </li>`;
+}
+
+function renderFuture(){
+  const grid=document.getElementById('sectionsGrid-future');
+  grid.innerHTML='';
+  SECTIONS_FUTURE.forEach(sec=>{
+    const {done,total,pct}=progressFor(sec,getItemsFut);
+    const items=getItemsFut(sec);
+    const listHTML=items.map(i=>liHTMLFut(sec,i)).join('');
+    const addRow=`<div class="add-row">
+      <input class="add-input" id="inp-fut-${sec.id}" type="text" placeholder="Add an idea and press Enter..." onkeydown="if(event.key==='Enter')addCustomFut('${sec.id}')">
+      <button class="add-btn" onclick="addCustomFut('${sec.id}')">+ Add</button>
+    </div>`;
+    const card=document.createElement('div');
+    card.className='section-card'; card.dataset.tier=sec.tier; card.dataset.id=sec.id;
+    card.innerHTML=`
+      <div class="card-header" onclick="toggleCard('${sec.id}-future')">
+        <div class="card-header-top">
+          <div class="card-title-group">
+            <div class="card-icon-wrap" style="background:${sec.iconBg}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="${sec.color}"><use href="${sec.icon}"/></svg>
+            </div>
+            <div class="card-title">${sec.title}</div>
+            <div class="card-subtitle">${sec.subtitle}</div>
+          </div>
+          <div class="card-right">${tierBadge(sec.tier)}<div class="chevron" id="chev-${sec.id}-future">&#9660;</div></div>
+        </div>
+        <div class="prog-bg"><div class="prog-fill" id="prog-${sec.id}-future" style="width:${pct}%;background:${sec.pc}"></div></div>
+        <div class="prog-label" id="plbl-${sec.id}-future">${done} / ${total} done</div>
+      </div>
+      <div class="card-body" id="body-${sec.id}-future">
+        <ul class="checklist" id="list-${sec.id}-future">${listHTML}</ul>
+        ${addRow}
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateSummary('future',SECTIONS_FUTURE,getItemsFut);
+}
+
+function refreshCardFut(secId){
+  const sec=SECTIONS_FUTURE.find(s=>s.id===secId); if(!sec) return;
+  const {done,total,pct}=progressFor(sec,getItemsFut);
+  document.getElementById('prog-'+secId+'-future').style.width=pct+'%';
+  document.getElementById('plbl-'+secId+'-future').textContent=done+' / '+total+' done';
+  document.getElementById('list-'+secId+'-future').innerHTML=getItemsFut(sec).map(i=>liHTMLFut(sec,i)).join('');
+  updateSummary('future',SECTIONS_FUTURE,getItemsFut);
+}
+function toggleCheckFut(secId,idx){
+  if(!checksF[secId]) checksF[secId]={};
+  checksF[secId][idx]=!checksF[secId][idx];
+  refreshCardFut(secId); scheduleSave();
+}
+function toggleCustomFut(secId,ci){
+  if(!customsF[secId]) customsF[secId]=[];
+  customsF[secId][ci].done=!customsF[secId][ci].done;
+  refreshCardFut(secId); scheduleSave();
+}
+function deleteCustomFut(secId,ci){
+  customsF[secId].splice(ci,1);
+  refreshCardFut(secId); scheduleSave();
+}
+function addCustomFut(secId){
+  const inp=document.getElementById('inp-fut-'+secId);
+  const text=inp.value.trim(); if(!text) return;
+  if(!customsF[secId]) customsF[secId]=[];
+  customsF[secId].push({t:text,done:false}); inp.value='';
+  openCard(secId+'-future'); refreshCardFut(secId); scheduleSave();
+}
+
+// ══════════════════════════════════════════════════════════
+//  SHARED UI
+// ══════════════════════════════════════════════════════════
+function renderAll(){ renderProto(); renderMvp(); renderFuture(); }
+
+function updateSummary(tab, sections, getItemsFn){
+  let ti=0,td=0,sd=0;
+  sections.forEach(sec=>{
+    const {done,total}=progressFor(sec,getItemsFn);
+    ti+=total; td+=done;
+    if(done===total&&total>0) sd++;
+  });
+  const pct=ti?Math.round((td/ti)*100):0;
+  document.getElementById('summaryStrip-'+tab).innerHTML=`
+    <div class="stat"><div class="stat-label">Overall progress</div><div class="stat-num">${pct}%</div><div class="stat-sub">${td} of ${ti} items</div></div>
+    <div class="stat"><div class="stat-label">Items completed</div><div class="stat-num">${td}</div><div class="stat-sub">of ${ti} total</div></div>
+    <div class="stat"><div class="stat-label">Sections done</div><div class="stat-num">${sd}</div><div class="stat-sub">of ${sections.length} sections</div></div>
+    <div class="stat"><div class="stat-label">Sections</div><div class="stat-num">${sections.length}</div><div class="stat-sub">total in this tab</div></div>`;
 }
 
 function toggleCard(id){
   document.getElementById('body-'+id).classList.toggle('open');
   document.getElementById('chev-'+id).classList.toggle('open');
 }
-
-function toggleCheck(secId, idx){
-  if(!checks[secId]) checks[secId]={};
-  checks[secId][idx] = !checks[secId][idx];
-  refreshCard(secId);
-  scheduleSave();
+function openCard(id){
+  document.getElementById('body-'+id).classList.add('open');
+  document.getElementById('chev-'+id).classList.add('open');
 }
 
-function toggleCustom(ci){
-  customs[ci].done = !customs[ci].done;
-  refreshCard('todos');
-  scheduleSave();
-}
-
-function deleteCustom(ci){
-  customs.splice(ci,1);
-  refreshCard('todos');
-  scheduleSave();
-}
-
-function addCustom(){
-  const inp = document.getElementById('inp-todos');
-  const text = inp.value.trim();
-  if(!text) return;
-  customs.push({t:text, done:false});
-  inp.value = '';
-  const body = document.getElementById('body-todos');
-  if(!body.classList.contains('open')){ body.classList.add('open'); document.getElementById('chev-todos').classList.add('open'); }
-  refreshCard('todos');
-  scheduleSave();
-}
-
-function toggleFuture(ci){
-  futures[ci].done = !futures[ci].done;
-  refreshCard('scoped');
-  scheduleSave();
-}
-
-function deleteFuture(ci){
-  futures.splice(ci,1);
-  refreshCard('scoped');
-  scheduleSave();
-}
-
-function addFuture(){
-  const inp = document.getElementById('inp-scoped');
-  const text = inp.value.trim();
-  if(!text) return;
-  futures.push({t:text, done:false});
-  inp.value = '';
-  const body = document.getElementById('body-scoped');
-  if(!body.classList.contains('open')){ body.classList.add('open'); document.getElementById('chev-scoped').classList.add('open'); }
-  refreshCard('scoped');
-  scheduleSave();
-}
-
-function updateSummary(){
-  let ti=0,td=0,sd=0;
-  SECTIONS.forEach(sec=>{
-    const {done,total} = progressFor(sec);
-    ti+=total; td+=done;
-    if(done===total && total>0) sd++;
+function expandAll(tab){
+  const suffix=tab==='proto'?'-proto':tab==='mvp'?'-mvp':'-future';
+  const secs=tab==='proto'?SECTIONS_PROTO:tab==='mvp'?SECTIONS_MVP:SECTIONS_FUTURE;
+  secs.forEach(s=>{
+    document.getElementById('body-'+s.id+suffix).classList.add('open');
+    document.getElementById('chev-'+s.id+suffix).classList.add('open');
   });
-  const pct = ti ? Math.round((td/ti)*100) : 0;
-  document.getElementById('summaryStrip').innerHTML=`
-    <div class="stat"><div class="stat-label">Overall progress</div><div class="stat-num">${pct}%</div><div class="stat-sub">${td} of ${ti} items</div></div>
-    <div class="stat"><div class="stat-label">Items completed</div><div class="stat-num">${td}</div><div class="stat-sub">of ${ti} total</div></div>
-    <div class="stat"><div class="stat-label">Sections done</div><div class="stat-num">${sd}</div><div class="stat-sub">of ${SECTIONS.length} sections</div></div>
-    <div class="stat"><div class="stat-label">Platform sections</div><div class="stat-num">12</div><div class="stat-sub">fully documented</div></div>`;
+}
+function collapseAll(tab){
+  const suffix=tab==='proto'?'-proto':tab==='mvp'?'-mvp':'-future';
+  const secs=tab==='proto'?SECTIONS_PROTO:tab==='mvp'?SECTIONS_MVP:SECTIONS_FUTURE;
+  secs.forEach(s=>{
+    document.getElementById('body-'+s.id+suffix).classList.remove('open');
+    document.getElementById('chev-'+s.id+suffix).classList.remove('open');
+  });
 }
 
-function filterTier(tier, el){
-  document.querySelectorAll('.filter-row .chip').forEach(c=>c.classList.remove('active'));
+function filterTier(tier,el,tab){
+  const prefix=tab==='proto'?'panel-proto':tab==='mvp'?'panel-mvp':'panel-future';
+  document.querySelectorAll('#'+prefix+' .filter-row .chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('.section-card').forEach(card=>{
+  document.querySelectorAll('#'+prefix+' .section-card').forEach(card=>{
     const t=card.dataset.tier;
-    const show=tier==='all'
-      ||(tier==='bronze'&&(t==='bronze'||t==='both'||t==='all'))
-      ||(tier==='gold'&&(t==='gold'||t==='both'||t==='all'))
-      ||(tier==='both'&&t==='both');
-    card.style.display = show?'':'none';
+    const show=tier==='all'||(tier==='bronze'&&(t==='bronze'||t==='both'||t==='all'))||(tier==='gold'&&(t==='gold'||t==='both'||t==='all'))||(tier==='both'&&t==='both');
+    card.style.display=show?'':'none';
   });
 }
 
-function expandAll(){ SECTIONS.forEach(s=>{ document.getElementById('body-'+s.id).classList.add('open'); document.getElementById('chev-'+s.id).classList.add('open'); }); }
-function collapseAll(){ SECTIONS.forEach(s=>{ document.getElementById('body-'+s.id).classList.remove('open'); document.getElementById('chev-'+s.id).classList.remove('open'); }); }
-function resetAll(){
-  document.getElementById('resetModal').classList.add('open');
-}
-function closeResetModal(){
-  document.getElementById('resetModal').classList.remove('open');
-}
-function handleModalOverlayClick(e){
-  if(e.target === document.getElementById('resetModal')) closeResetModal();
-}
-function confirmReset(){
-  checks={}; customs=[]; futures=[];
-  save(); renderAll();
-  closeResetModal();
+// ── Tab switching ─────────────────────────────────────────
+function switchTab(tab, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  btn.classList.add('active');
 }
 
+// ── Reset modal ───────────────────────────────────────────
+function resetAll(tab){ resetTarget=tab; document.getElementById('resetModal').classList.add('open'); }
+function closeResetModal(){ document.getElementById('resetModal').classList.remove('open'); }
+function handleModalOverlayClick(e){ if(e.target===document.getElementById('resetModal')) closeResetModal(); }
+function confirmReset(){
+  if(resetTarget==='proto'){ checks={}; customs=[]; futures=[]; renderProto(); }
+  else if(resetTarget==='mvp'){ checksM={}; customsM={}; renderMvp(); }
+  else if(resetTarget==='future'){ checksF={}; customsF={}; renderFuture(); }
+  save(); closeResetModal();
+}
+
+// ── Feedback ──────────────────────────────────────────────
 function renderFeedback(){
-  const list = document.getElementById('fb-rows');
-  const label = document.getElementById('fb-count-label');
+  const list=document.getElementById('fb-rows');
+  const label=document.getElementById('fb-count-label');
   if(!feedbacks.length){
-    list.innerHTML = '<li class="fb-empty">No feedback yet — share the link with your team.</li>';
-    label.textContent = 'All feedback from your reviewers — live and synced.';
-    return;
+    list.innerHTML='<li class="fb-empty">No feedback yet — share the link with your team.</li>';
+    label.textContent='All feedback from your reviewers — live and synced.'; return;
   }
-  label.textContent = feedbacks.length + ' response' + (feedbacks.length===1?'':'s') + ' — live and synced.';
-  list.innerHTML = [...feedbacks].reverse().map((fb,ri)=>{
-    const realIdx = feedbacks.length - 1 - ri;
-    const sectionBadge = fb.section ? `<span class="fb-row-section">${fb.section}</span>` : '';
+  label.textContent=feedbacks.length+' response'+(feedbacks.length===1?'':'s')+' — live and synced.';
+  list.innerHTML=[...feedbacks].reverse().map((fb,ri)=>{
+    const realIdx=feedbacks.length-1-ri;
+    const sb=fb.section?`<span class="fb-row-section">${fb.section}</span>`:'';
     return `<li class="fb-row">
       <div class="fb-row-top">
         <span class="fb-row-name">${fb.name||'Anonymous'}</span>
-        <div class="fb-row-meta">
-          ${sectionBadge}
-          <span class="fb-row-time">${fb.time||''}</span>
+        <div class="fb-row-meta">${sb}<span class="fb-row-time">${fb.time||''}</span>
           <button class="fb-row-del" onclick="deleteFeedback(${realIdx})" title="Remove">✕</button>
         </div>
       </div>
@@ -693,46 +1166,34 @@ function renderFeedback(){
     </li>`;
   }).join('');
 }
-
-function selectName(btn, name){
+function selectName(btn,name){
   document.querySelectorAll('.fb-name-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
-  document.getElementById('fb-name').value = name;
+  document.getElementById('fb-name').value=name;
 }
-
 async function submitFeedback(){
-  const name = document.getElementById('fb-name').value.trim();
-  const text = document.getElementById('fb-text').value.trim();
-  const section = document.getElementById('fb-section').value;
+  const name=document.getElementById('fb-name').value.trim();
+  const text=document.getElementById('fb-text').value.trim();
+  const section=document.getElementById('fb-section').value;
   if(!text) return;
-  const btn = document.getElementById('fb-btn');
-  feedbacks.push({
-    name: name||'Anonymous',
-    text,
-    section,
-    time: new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
-  });
+  feedbacks.push({name:name||'Anonymous',text,section,time:new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})});
   document.getElementById('fb-name').value='';
   document.querySelectorAll('.fb-name-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('fb-text').value='';
   document.getElementById('fb-section').value='';
+  const btn=document.getElementById('fb-btn');
   btn.textContent='Sent!'; btn.classList.add('sent');
-  setTimeout(()=>{ btn.textContent='Send feedback'; btn.classList.remove('sent'); }, 2500);
-  renderFeedback();
-  await saveFeedbackOnly();
+  setTimeout(()=>{ btn.textContent='Send feedback'; btn.classList.remove('sent'); },2500);
+  renderFeedback(); await saveFeedbackOnly();
 }
-
 async function saveFeedbackOnly(){
-  localStorage.setItem(FBKEY, JSON.stringify(feedbacks));
+  localStorage.setItem(FBKEY,JSON.stringify(feedbacks));
   if(!isConfigured) return;
-  try{ await sbSet(FBKEY, feedbacks); } catch(e){}
+  try{ await sbSet(FBKEY,feedbacks); }catch(e){}
 }
-
 function deleteFeedback(idx){
   if(!confirm('Remove this feedback?')) return;
-  feedbacks.splice(idx,1);
-  renderFeedback();
-  saveFeedbackOnly();
+  feedbacks.splice(idx,1); renderFeedback(); saveFeedbackOnly();
 }
 
 load();
