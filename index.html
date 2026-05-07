@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oritain Prototype Roadmap</title>
 <style>
@@ -12,7 +13,7 @@
     --teal-500:#23B1D8;--teal-600:#16A3CB;--teal-700:#0090B9;--teal-800:#0080A6;--teal-900:#006086;
     --grey-black:#071521;--grey-900:#20262C;--grey-800:#303A44;--grey-700:#49545F;
     --grey-600:#848C94;--grey-500:#AEB5BC;--grey-400:#CED4DA;--grey-300:#EEF0F2;--grey-100:#FAFAFA;
-    --bg:#F7F5F2;--bg2:#EFEDE9;--bg3:#E8E5E0;
+    --bg:#EDEAE4;--bg2:#E4E0D9;--bg3:#D8D4CC;
     --text:#1A1714;--text2:#5A544E;--text3:#9B948C;
     --border:#DDD9D4;--border2:#C8C2BB;
     --radius:16px;--radius-sm:10px;--radius-pill:100px;
@@ -49,7 +50,7 @@
   }
   #gate.hidden{opacity:0;pointer-events:none}
   .gate-box{
-    background:var(--bg);border-radius:24px;
+    background:#FAF8F5;border-radius:24px;
     padding:52px 48px 44px;max-width:400px;width:90%;
     box-shadow:
       8px 8px 20px rgba(140,130,108,0.18),
@@ -72,7 +73,7 @@
   .gate-input{
     width:100%;padding:13px 46px 13px 16px;
     border-radius:var(--radius-sm);border:none;
-    background:var(--bg);color:var(--text);font-size:14px;
+    background:#FAF8F5;color:var(--text);font-size:14px;
     outline:none;font-family:'Geist',system-ui,sans-serif;
     transition:box-shadow 0.2s;letter-spacing:0.3px;
     box-shadow:var(--shadow-in);
@@ -103,7 +104,7 @@
   .gate-email{
     width:100%;padding:13px 16px;
     border-radius:var(--radius-sm);border:none;
-    background:var(--bg);color:var(--text);font-size:14px;
+    background:#FAF8F5;color:var(--text);font-size:14px;
     outline:none;font-family:'Geist',system-ui,sans-serif;
     transition:box-shadow 0.2s;letter-spacing:0.3px;
     box-shadow:var(--shadow-in);
@@ -124,7 +125,7 @@
   /* ── SIDEBAR ─────────────────────────────────────────── */
   .sidebar{
     width:var(--sidebar-w);flex-shrink:0;
-    background:var(--bg);border-right:1px solid rgba(200,192,180,0.5);
+    background:#FAF8F5;border-right:1px solid rgba(200,192,180,0.4);
     min-height:100vh;display:flex;flex-direction:column;
     position:sticky;top:0;height:100vh;overflow-y:auto;
     box-shadow:4px 0 16px rgba(140,130,110,0.06);
@@ -186,7 +187,7 @@
 
   /* ── SUMMARY STRIP ───────────────────────────────────── */
   .summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:2rem}
-  .stat{background:var(--bg);border:none;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);transition:box-shadow 0.2s}
+  .stat{background:#FAF8F5;border:none;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);transition:box-shadow 0.2s}
   .stat:hover{box-shadow:var(--shadow-lg)}
   .stat-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px}
   .stat-num{font-family:'Geist',system-ui,sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-0.8px}
@@ -204,7 +205,7 @@
 
   /* ── CARDS ───────────────────────────────────────────── */
   .sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem;margin-bottom:2.5rem}
-  .section-card{background:var(--bg);border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s}
+  .section-card{background:#FAF8F5;border:none;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s}
   .section-card:hover{box-shadow:var(--shadow-lg)}
   .card-header{padding:18px 20px 14px;cursor:pointer;user-select:none}
   .card-header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -253,7 +254,7 @@
   /* ── ROADMAP SNAPSHOT ────────────────────────────────── */
   .section-heading{font-family:'Geist',system-ui,sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:1rem;letter-spacing:-0.4px}
   .roadmap-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .roadmap-col{background:var(--bg);border:none;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .roadmap-col{background:#FAF8F5;border:none;border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
   .col-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
   .col-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
   .col-label{font-size:13px;font-weight:600;color:var(--text)}
@@ -276,7 +277,7 @@
 
   /* ── FEEDBACK ────────────────────────────────────────── */
   .feedback-section{margin-top:2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-  .feedback-card{background:var(--bg);border:none;border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
+  .feedback-card{background:#FAF8F5;border:none;border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow)}
   .feedback-card-title{font-family:'Geist',system-ui,sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px}
   .feedback-card-sub{font-size:12px;color:var(--text3);margin-bottom:16px}
   .fb-name{width:100%;padding:9px 13px;border-radius:var(--radius-sm);border:none;background:var(--bg);color:var(--text);font-size:13px;outline:none;font-family:'Geist',system-ui,sans-serif;margin-bottom:8px;transition:box-shadow 0.15s;box-shadow:var(--shadow-in)}
