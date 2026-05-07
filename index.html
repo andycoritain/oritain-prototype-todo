@@ -796,7 +796,14 @@
   <symbol id="i-scope" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></symbol>
 </defs></svg>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ══ SUPABASE CLIENT — must be first ══════════════════════
+const { createClient } = supabase;
+const SUPABASE_URL_INIT = 'https://aiqdizvifkiylkwbesix.supabase.co';
+const SUPABASE_KEY_INIT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWRpenZpZmtpeWxrd2Jlc2l4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDEyODMsImV4cCI6MjA5MTUxNzI4M30.78rwjJ67B80tcBhD4nvVvpgIwwpPIsl3tIm-WqrPrzY';
+const db = createClient(SUPABASE_URL_INIT, SUPABASE_KEY_INIT);
+
 // ══ PASSWORD GATE ════════════════════════════════════════
 // Auth handled by Supabase — no client-side password
 let eyeVisible = false;
@@ -886,9 +893,10 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 });
 
 // ══ CONFIGURATION ══════════════════════════════════════
-const SUPABASE_URL = 'https://aiqdizvifkiylkwbesix.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpcWRpenZpZmtpeWxrd2Jlc2l4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5NDEyODMsImV4cCI6MjA5MTUxNzI4M30.78rwjJ67B80tcBhD4nvVvpgIwwpPIsl3tIm-WqrPrzY';
-const isConfigured = SUPABASE_URL.startsWith('https://') && SUPABASE_KEY.startsWith('eyJ');
+// Supabase client already initialised above — vars kept for isConfigured check
+const SUPABASE_URL = SUPABASE_URL_INIT;
+const SUPABASE_KEY = SUPABASE_KEY_INIT;
+const isConfigured = true;
 
 const SK='oritain_checks_v4',TK='oritain_todos_v4',FK='oritain_future_v4',FBKEY='oritain_feedback_v1';
 const SK_MVP='oritain_mvp_checks_v1',TK_MVP='oritain_mvp_customs_v1',COL_MVP='oritain_mvp_cols_v1';
