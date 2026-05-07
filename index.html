@@ -166,6 +166,24 @@
   .sync-dot.offline{background:var(--text3)}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
   .sync-time{font-size:10px;color:var(--text3);margin-top:3px}
+  .signout-btn{
+    display:flex;align-items:center;gap:8px;
+    width:100%;padding:9px 12px;
+    background:none;border:none;border-radius:var(--radius-sm);
+    font-family:'Geist',system-ui,sans-serif;
+    font-size:12px;font-weight:500;
+    color:var(--text3);cursor:pointer;
+    transition:all 0.15s;text-align:left;
+    margin-top:2px;
+  }
+  .signout-btn:hover{
+    background:var(--red-bg);
+    color:var(--red-text);
+  }
+  .signout-btn svg{ flex-shrink:0; }
+  [data-theme="dark"] .signout-btn{
+    font-family:'Geist Mono','Courier New',monospace;
+  }
 
   /* ── MAIN ────────────────────────────────────────────── */
   .main{flex:1;min-width:0;padding:2.5rem 2rem 4rem}
@@ -584,6 +602,14 @@
       <span id="syncMsg">Connecting...</span>
     </div>
     <div class="sync-time" id="syncTime"></div>
+    <button class="signout-btn" onclick="signOut()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Sign out
+    </button>
   </div>
 </aside>
 
@@ -856,6 +882,11 @@ async function forgotPassword(){
   err.style.color='var(--teal-600)';
   err.textContent='Reset email sent — check your inbox.';
   setTimeout(()=>{ err.style.color=''; err.textContent=''; },5000);
+}
+
+async function signOut(){
+  await db.auth.signOut();
+  // onAuthStateChange will handle showing the gate
 }
 
 function unlockGate(){
